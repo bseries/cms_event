@@ -43,6 +43,13 @@ class Events extends \lithium\data\Model {
 				'message' => 'Dieses Feld darf nicht leer sein.'
 			]
 		];
+		$model->validates['start'] = [
+			[
+				'notEmpty',
+				'on' => ['create', 'update'],
+				'message' => 'Es muss ein Startdatum angegeben werden.'
+			]
+		];
 		$model->validates['body'] = [
 			[
 				'notEmpty',

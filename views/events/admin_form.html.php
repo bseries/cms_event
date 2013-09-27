@@ -21,6 +21,10 @@ require(['media-attachment'], function(MediaAttachment) {
 			<div class="selected"></div>
 			<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
 		</div>
+		<?= $this->form->field('start', ['type' => 'date', 'label' => $t('Start')]) ?>
+		<?= $this->form->field('end', ['type' => 'date', 'label' => $t('End')]) ?>
+		<?= $this->form->field('is_open_end', ['type' => 'checkbox', 'label' => $t('Open ended?')]) ?>
+		<?= $this->form->field('location', ['type' => 'text', 'label' => $t('Location')]) ?>
 		<?= $this->form->field('teaser', ['type' => 'textarea', 'label' => $t('Teaser'), 'wrap' => ['class' => 'teaser']]) ?>
 		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content'), 'wrap' => ['class' => 'body']]) ?>
 		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
