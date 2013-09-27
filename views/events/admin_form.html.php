@@ -10,7 +10,7 @@ require(['media-attachment'], function(MediaAttachment) {
 </script>
 <?php $this->scripts(ob_get_clean()) ?>
 
-<event class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $this->title($t('Event')) ?></h1>
 
 	<?=$this->form->create($item) ?>
@@ -30,4 +30,4 @@ require(['media-attachment'], function(MediaAttachment) {
 		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
 		<?= $this->form->button($t('save'), ['type' => 'submit']) ?>
 	<?=$this->form->end() ?>
-</event>
+</article>

@@ -1,4 +1,4 @@
-<event class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $t('Events') ?></h1>
 
 	<nav class="actions">
@@ -32,4 +32,4 @@
 			<?php endforeach ?>
 		</tbody>
 	</table>
-</event>
+</article>
