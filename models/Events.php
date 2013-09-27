@@ -13,6 +13,7 @@
 namespace cms_event\models;
 
 use lithium\util\Validator;
+use DateTime;
 
 class Events extends \lithium\data\Model {
 
@@ -75,6 +76,10 @@ class Events extends \lithium\data\Model {
 		Validator::add('noUppercasing', function($value, $format, $options) {
 			return !preg_match('/[A-Z]+/', $value);
 		});
+	}
+
+	public function date($entity) {
+		return DateTime::createFromFormat('Y-m-d', $entity->start);
 	}
 }
 
