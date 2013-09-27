@@ -70,7 +70,7 @@ class Events extends \lithium\data\Model {
 			]
 		];
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
-			return preg_match('/^([a-z]+)(\s?,\s?[a-z]+)*$/i', $value);
+			return empty($value) || preg_match('/^([a-z]+)(\s?,\s?[a-z]+)*$/i', $value);
 		});
 		Validator::add('noUppercasing', function($value, $format, $options) {
 			return !preg_match('/[A-Z]+/', $value);
