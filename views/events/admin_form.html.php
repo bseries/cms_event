@@ -23,9 +23,17 @@ require(['media-attachment'], function(MediaAttachment) {
 		</div>
 		<div class="date-range">
 			<label><?= $t('Start/end') ?></label>
-			<?= $this->form->field('start', ['type' => 'date', 'label' => $t('Start')]) ?>
+			<?= $this->form->field('start', [
+				'type' => 'date',
+				'label' => $t('Start'),
+				'value' => $item->start != '0000-00-00' ? $item->start : ''
+			]) ?>
 			<div class="separator">&mdash;</div>
-			<?= $this->form->field('end', ['type' => 'date', 'label' => $t('End')]) ?>
+			<?= $this->form->field('end', [
+				'type' => 'date',
+				'label' => $t('End'),
+				'value' => $item->end != '0000-00-00' ? $item->end : ''
+			]) ?>
 			<?= $this->form->field('is_open_end', ['type' => 'checkbox', 'label' => $t('Open ended?'), 'checked' => $item->is_open_end]) ?>
 		</div>
 		<?= $this->form->field('location', ['type' => 'text', 'label' => $t('Location')]) ?>
