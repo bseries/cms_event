@@ -1,7 +1,6 @@
 <?php ob_start() ?>
 <script>
 require(['editor'], function(Editor) {
-	Editor.make('form .teaser textarea', false);
 	Editor.make('form .body textarea', true);
 });
 require(['media-attachment'], function(MediaAttachment) {
@@ -37,7 +36,11 @@ require(['media-attachment'], function(MediaAttachment) {
 			<?= $this->form->field('is_open_end', ['type' => 'checkbox', 'label' => $t('Open ended?'), 'checked' => $item->is_open_end]) ?>
 		</div>
 		<?= $this->form->field('location', ['type' => 'text', 'label' => $t('Location')]) ?>
-		<?= $this->form->field('teaser', ['type' => 'textarea', 'label' => $t('Teaser'), 'wrap' => ['class' => 'teaser']]) ?>
+		<?= $this->form->field('teaser', [
+			'type' => 'textarea',
+			'label' => $t('Teaser'),
+			'wrap' => ['class' => 'teaser'],
+		]) ?>
 		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content'), 'wrap' => ['class' => 'body']]) ?>
 		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
 		<?= $this->form->button($t('save'), ['type' => 'submit']) ?>
