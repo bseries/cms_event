@@ -1,3 +1,12 @@
+<?php
+
+$dateFormatter = new IntlDateFormatter(
+	'de_DE',
+	IntlDateFormatter::SHORT,
+	IntlDateFormatter::SHORT
+);
+
+?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $t('Events') ?></h1>
 
@@ -22,8 +31,12 @@
 						<?= $this->media->image($version->url('http'), ['class' => 'media']) ?>
 					<?php endif ?>
 				<td><?= $item->title ?>
-				<td><?= $item->created ?>
-				<td><?= $item->modified ?>
+				<td>
+					<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
+					<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+				<td>
+					<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->modified) ?>
+					<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
 				<td>
 					<nav class="actions">
 						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_event'], ['class' => 'button']) ?>
