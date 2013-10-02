@@ -30,7 +30,8 @@ class Events extends \lithium\data\Model {
 		'cms_core\extensions\data\behavior\Timestamp',
 		'li3_taggable\extensions\data\behavior\Taggable' => [
 			'field' => 'tags',
-			'tagModel' => false
+			'tagModel' => false,
+			'filters' => ['strtolower']
 		]
 	];
 
@@ -63,18 +64,10 @@ class Events extends \lithium\data\Model {
 				'noSpacesInTags',
 				'on' => ['create', 'update'],
 				'message' => 'Es sind keine Leerzeichen innerhalb von Tags erlaubt.'
-			],
-			[
-				'noUppercasing',
-				'on' => ['create', 'update'],
-				'message' => 'Für Tags muss Kleinschreibung benutzt werden.'
 			]
 		];
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
 			return empty($value) || preg_match('/^([a-z]+)(\s?,\s?[a-z]+)*$/i', $value);
-		});
-		Validator::add('noUppercasing', function($value, $format, $options) {
-			return !preg_match('/[A-Z]+/', $value);
 		});
 	}
 
