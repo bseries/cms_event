@@ -67,7 +67,7 @@ class Events extends \lithium\data\Model {
 			]
 		];
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
-			return empty($value) || preg_match('/^([a-z]+)(\s?,\s?[a-z]+)*$/i', $value);
+			return empty($value) || preg_match('/^([a-z0-9]+)(\s?,\s?[a-z0-9]+)*$/i', $value);
 		});
 	}
 
