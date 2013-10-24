@@ -89,7 +89,7 @@ class Events extends \lithium\data\Model {
 	public static function upcoming() {
 		return static::find('all', [
 			'conditions' => [
-				'start >' => date('Y-m-d')
+				'start' => '> ' . date('Y-m-d')
 			],
 			'order' => ['start' => 'ASC']
 		]);
@@ -98,9 +98,9 @@ class Events extends \lithium\data\Model {
 	public static function current() {
 		return static::find('all', [
 			'conditions' => [
-				'start <' => date('Y-m-d'),
+				'start' => '< ' . date('Y-m-d'),
 				'or' => [
-					'end >' => date('Y-m-d'),
+					'end' => '> ' . date('Y-m-d'),
 					'is_open_end' => true
 				]
 			],
@@ -111,9 +111,9 @@ class Events extends \lithium\data\Model {
 	public static function previous() {
 		return static::find('all', [
 			'conditions' => [
-				'start <' => date('Y-m-d'),
+				'start' => '< ' . date('Y-m-d'),
 				'or' => [
-					'end <' => date('Y-m-d'),
+					'end' => '< ' . date('Y-m-d'),
 					'is_open_end' => false
 				]
 			],
