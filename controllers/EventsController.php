@@ -12,6 +12,7 @@
 
 namespace cms_event\controllers;
 
+use cms_film\models\Films;
 use cms_event\models\Events;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
@@ -20,15 +21,10 @@ use lithium\core\Environment;
 class EventsController extends \lithium\action\Controller {
 
 	public function admin_index() {
-		$features = Environment::get('features');
 
 		$query = [
 			'with' => ['CoverMedia']
 		];
-		if ($features['connectFilmsWithEvents']) {
-			$query['with'][] = 'FilmsEvents';
-		}
-
 		$data = Events::find('all', $query);
 		return compact('data');
 	}
@@ -47,7 +43,7 @@ class EventsController extends \lithium\action\Controller {
 			}
 		}
 		$this->_render['template'] = 'admin_form';
-		return compact('item');
+		return compact('item') + $this->_selectData();
 	}
 
 	public function admin_edit() {
@@ -64,7 +60,18 @@ class EventsController extends \lithium\action\Controller {
 			}
 		}
 		$this->_render['template'] = 'admin_form';
-		return compact('item');
+		return compact('item') + $this->_selectData();
+	}
+
+	protected function _selectData() {
+		$features = Environment::get('features');
+
+		if (!$features['connectFilmsWithEvents']) {
+			return;
+		}
+		$films = Films::find('list');
+
+		return compact('films');
 	}
 
 	public function admin_delete() {

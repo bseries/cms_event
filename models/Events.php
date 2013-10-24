@@ -12,6 +12,9 @@
 
 namespace cms_event\models;
 
+use cms_film\models\FilmFeatures;
+use cms_film\models\Film;
+use cms_film\models\FilmsEvents;
 use lithium\core\Environment;
 use lithium\util\Validator;
 use DateTime;
@@ -61,13 +64,6 @@ class Events extends \lithium\data\Model {
 				'message' => 'Es muss ein Startdatum angegeben werden.'
 			]
 		];
-		$model->validates['body'] = [
-			[
-				'notEmpty',
-				'on' => ['create', 'update'],
-				'message' => 'Dieses Feld darf nicht leer sein.'
-			]
-		];
 		$model->validates['tags'] = [
 			[
 				'noSpacesInTags',
@@ -78,6 +74,42 @@ class Events extends \lithium\data\Model {
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
 			return empty($value) || preg_match('/^([a-z0-9]+)(\s?,\s?[a-z0-9]+)*$/i', $value);
 		});
+	}
+
+
+	protected static $_cachedFilms = [];
+
+	public function films($entity) {
+		if (isset(static::$_cachedFilms[$entity->id])) {
+			return static::$_cachedFilms[$entity->id];
+		}
+		$films = [];
+
+		$results = FilmsEvents::find('all', [
+			'conditions' => ['event_id' => $entity->id],
+			'with' => 'Film'
+		]);
+		foreach ($results as $result) {
+			$films[] = $result->film;
+		}
+		return static::$_cachedFilms[$entity->id] = $films;
+	}
+
+	public function filmFeatures($entity) {
+		$features = [];
+
+		foreach ($this->films($entity) as $result) {
+			if (!$result->film_feature_id) {
+				continue;
+			}
+			$feature = FilmFeatures::find('first', [
+				'conditions' => ['id' => $result->film_feature_id]
+			]);
+			if ($feature) {
+				$features[$feature->id] = $feature;
+			}
+		}
+		return $features;
 	}
 
 	public function date($entity) {
@@ -130,5 +162,32 @@ class Events extends \lithium\data\Model {
 		]);
 	}
 }
+
+Events::applyFilter('save', function($self, $params, $chain) {
+	$data =& $params['data'];
+
+	$films = [];
+	if (isset($data['films'])) {
+		$films = $data['films'];
+		unset($data['films']);
+	}
+	$result = $chain->next($self, $params, $chain);
+
+	if (!$result) {
+		return false;
+	}
+	if ($films) {
+		$results = FilmsEvents::find('all', [
+			'conditions' => ['event_id' => $params['entity']->id]
+		]);
+		$results->delete();
+
+		foreach ($films as $id) {
+			$join = FilmsEvents::create(['film_id' => $id, 'event_id' => $params['entity']->id]);
+			$join->save();
+		}
+	}
+	return true;
+});
 
 ?>

@@ -1,3 +1,10 @@
+<?php
+
+use lithium\core\Environment;
+
+$features = Environment::get('features');
+
+?>
 <?php ob_start() ?>
 <script>
 require(['editor'], function(Editor) {
@@ -44,6 +51,15 @@ require(['media-attachment'], function(MediaAttachment) {
 		]) ?>
 		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content'), 'wrap' => ['class' => 'body']]) ?>
 		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
+
+		<?php if ($features['connectFilmsWithEvents']): ?>
+			<?= $this->form->field('films', [
+				'type' => 'select',
+				'multiple' => true,
+				'list' => $films,
+				'label' => $t('Associated Films')
+			]) ?>
+		<?php endif ?>
 		<?= $this->form->button($t('save'), ['type' => 'submit']) ?>
 	<?=$this->form->end() ?>
 </article>
