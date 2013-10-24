@@ -74,6 +74,52 @@ class Events extends \lithium\data\Model {
 	public function date($entity) {
 		return DateTime::createFromFormat('Y-m-d', $entity->start);
 	}
+
+	// Canonical URL for the event.
+	public function url($entity) {
+		if ($entity->url && !$entity->body) {
+			return $entity->url;
+		}
+		return array(
+			'controller' => 'events', 'action' => 'view',
+			'id' => $entity->id, 'library' => 'app'
+		);
+	}
+
+	public static function upcoming() {
+		return static::find('all', [
+			'conditions' => [
+				'start >' => date('Y-m-d')
+			],
+			'order' => ['start' => 'ASC']
+		]);
+	}
+
+	public static function current() {
+		return static::find('all', [
+			'conditions' => [
+				'start <' => date('Y-m-d'),
+				'or' => [
+					'end >' => date('Y-m-d'),
+					'is_open_end' => true
+				]
+			],
+			'order' => ['start' => 'ASC']
+		]);
+	}
+
+	public static function previous() {
+		return static::find('all', [
+			'conditions' => [
+				'start <' => date('Y-m-d'),
+				'or' => [
+					'end <' => date('Y-m-d'),
+					'is_open_end' => false
+				]
+			],
+			'order' => ['start' => 'ASC']
+		]);
+	}
 }
 
 ?>
