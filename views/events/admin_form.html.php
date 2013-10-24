@@ -1,6 +1,7 @@
 <?php ob_start() ?>
 <script>
 require(['editor'], function(Editor) {
+	Editor.make('form .teaser textarea', true);
 	Editor.make('form .body textarea', true);
 });
 require(['media-attachment'], function(MediaAttachment) {
