@@ -25,8 +25,8 @@ class EventsController extends \lithium\action\Controller {
 		$query = [
 			'with' => ['CoverMedia']
 		];
-		if ($features['connectEventsWithFilms']) {
-			$query['with'][] = 'EventsFilms';
+		if ($features['connectFilmsWithEvents']) {
+			$query['with'][] = 'FilmsEvents';
 		}
 
 		$data = Events::find('all', $query);

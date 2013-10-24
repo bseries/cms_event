@@ -41,9 +41,9 @@ class Events extends \lithium\data\Model {
 
 		$model = static::_object();
 
-		if ($features['connectEventsWithFilms']) {
-			$model->hasMany['EventsFilms'] = [
-				'to' => 'cms_film\models\EventsFilms'
+		if ($features['connectFilmsWithEvents']) {
+			$model->hasMany['FilmsEvents'] = [
+				'to' => 'cms_film\models\FilmsEvents'
 			];
 		}
 

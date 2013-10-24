@@ -17,7 +17,7 @@ extract(Message::aliases());
 
 Environment::set(true, array(
 	'features' => [
-		'connectEventsWithFilms' => false
+		'connectFilmsWithEvents' => false
 	],
 	'modules' => array(
 		'events' => array(
