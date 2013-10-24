@@ -16,6 +16,9 @@ use lithium\g11n\Message;
 extract(Message::aliases());
 
 Environment::set(true, array(
+	'features' => [
+		'connectEventsWithFilms' => false
+	],
 	'modules' => array(
 		'events' => array(
 			'library' => 'cms_event', 'title' => $t('Events'), 'name' => 'events', 'slug' => 'events'

@@ -12,6 +12,7 @@
 
 namespace cms_event\models;
 
+use lithium\core\Environment;
 use lithium\util\Validator;
 use DateTime;
 
@@ -36,7 +37,15 @@ class Events extends \lithium\data\Model {
 	];
 
 	public static function __init() {
+		$features = Environment::get('features');
+
 		$model = static::_object();
+
+		if ($features['connectEventsWithFilms']) {
+			$model->hasMany['EventsFilms'] = [
+				'to' => 'cms_film\models\EventsFilms'
+			];
+		}
 
 		$model->validates['title'] = [
 			[

@@ -15,11 +15,21 @@ namespace cms_event\controllers;
 use cms_event\models\Events;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
+use lithium\core\Environment;
 
 class EventsController extends \lithium\action\Controller {
 
 	public function admin_index() {
-		$data = Events::find('all', ['with' => 'CoverMedia']);
+		$features = Environment::get('features');
+
+		$query = [
+			'with' => ['CoverMedia']
+		];
+		if ($features['connectEventsWithFilms']) {
+			$query['with'][] = 'EventsFilms';
+		}
+
+		$data = Events::find('all', $query);
 		return compact('data');
 	}
 
