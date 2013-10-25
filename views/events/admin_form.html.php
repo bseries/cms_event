@@ -12,6 +12,14 @@ require(['editor'], function(Editor) {
 	Editor.make('form .body textarea', true);
 });
 require(['media-attachment'], function(MediaAttachment) {
+	<?php $url = ['controller' => 'files', 'library' => 'cms_media', 'admin' => true] ?>
+
+	MediaAttachment.init({
+		endpoints: {
+			namespace: 'admin/api',
+			view: '<?= $this->url($url + ['action' => 'api_view', 'id' => '__ID__']) ?>'
+		}
+	});
 	MediaAttachment.one('form .media-attachment');
 });
 </script>
