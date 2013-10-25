@@ -67,7 +67,7 @@ class EventsController extends \lithium\action\Controller {
 		$features = Environment::get('features');
 
 		if (!$features['connectFilmsWithEvents']) {
-			return;
+			return [];
 		}
 		$films = Films::find('list');
 

@@ -17,6 +17,7 @@ use cms_film\models\Film;
 use cms_film\models\FilmsEvents;
 use lithium\core\Environment;
 use lithium\util\Validator;
+use lithium\util\Set;
 use DateTime;
 
 class Events extends \lithium\data\Model {
@@ -27,6 +28,12 @@ class Events extends \lithium\data\Model {
 		'CoverMedia' => [
 			'to' => 'cms_media\models\Media',
 			'key' => 'cover_media_id'
+		]
+	];
+
+	public $hasMany = [
+		'FilmsEvents' => [
+			'to' => 'cms_film\models\FilmsEvents'
 		]
 	];
 
@@ -76,44 +83,12 @@ class Events extends \lithium\data\Model {
 		});
 	}
 
-
-	protected static $_cachedFilms = [];
-
-	public function films($entity) {
-		if (isset(static::$_cachedFilms[$entity->id])) {
-			return static::$_cachedFilms[$entity->id];
-		}
-		$films = [];
-
-		$results = FilmsEvents::find('all', [
-			'conditions' => ['event_id' => $entity->id],
-			'with' => 'Film'
-		]);
-		foreach ($results as $result) {
-			$films[] = $result->film;
-		}
-		return static::$_cachedFilms[$entity->id] = $films;
-	}
-
-	public function filmFeatures($entity) {
-		$features = [];
-
-		foreach ($this->films($entity) as $result) {
-			if (!$result->film_feature_id) {
-				continue;
-			}
-			$feature = FilmFeatures::find('first', [
-				'conditions' => ['id' => $result->film_feature_id]
-			]);
-			if ($feature) {
-				$features[$feature->id] = $feature;
-			}
-		}
-		return $features;
-	}
-
-	public function date($entity) {
+	public function start($entity) {
 		return DateTime::createFromFormat('Y-m-d', $entity->start);
+	}
+
+	public function end($entity) {
+		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
 	}
 
 	// Canonical URL for the event.
@@ -127,39 +102,51 @@ class Events extends \lithium\data\Model {
 		);
 	}
 
-	public static function upcoming() {
-		return static::find('all', [
-			'conditions' => [
-				'start' => '> ' . date('Y-m-d')
-			],
-			'order' => ['start' => 'ASC']
-		]);
+	public function filmFeatures($entity) {
+		$results = [];
+
+		if (!$entity->films_events) {
+			return $results;
+		}
+		foreach ($entity->films_events as $join) {
+			$results[$join->film->film_feature->id] = $join->film->film_feature;
+		}
+		return $results;
 	}
 
-	public static function current() {
-		return static::find('all', [
+	public static function upcoming(array $query = []) {
+		return static::find('all', Set::merge([
 			'conditions' => [
-				'start' => '< ' . date('Y-m-d'),
+				'start' => ['>' => date('Y-m-d')]
+			],
+			'order' => ['start' => 'DESC']
+		], $query));
+	}
+
+	public static function current(array $query = []) {
+		return static::find('all', Set::merge([
+			'conditions' => [
+				'start' => ['<' => date('Y-m-d')],
 				'or' => [
-					'end' => '> ' . date('Y-m-d'),
+					'end' => ['>' => date('Y-m-d')],
 					'is_open_end' => true
 				]
 			],
-			'order' => ['start' => 'ASC']
-		]);
+			'order' => ['start' => 'DESC']
+		], $query));
 	}
 
-	public static function previous() {
-		return static::find('all', [
+	public static function previous(array $query = []) {
+		return static::find('all', Set::merge([
 			'conditions' => [
-				'start' => '< ' . date('Y-m-d'),
+				'start' => ['<' => date('Y-m-d')],
 				'or' => [
-					'end' => '< ' . date('Y-m-d'),
+					'end' => ['<' => date('Y-m-d')],
 					'is_open_end' => false
 				]
 			],
-			'order' => ['start' => 'ASC']
-		]);
+			'order' => ['start' => 'DESC']
+		], $query));
 	}
 }
 
