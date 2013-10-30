@@ -83,6 +83,11 @@ class Events extends \lithium\data\Model {
 		});
 	}
 
+	// Canonical sort date.
+	public function date($entity) {
+		return $this->start($entity);
+	}
+
 	public function start($entity) {
 		return DateTime::createFromFormat('Y-m-d', $entity->start);
 	}
