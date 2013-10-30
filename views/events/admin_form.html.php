@@ -29,6 +29,7 @@ require(['jquery', 'domready!'], function($) {
 			$('form [name="url"]').parent().show();
 		} else {
 			$('form .body').show();
+			$('form [name="url"]').vale('');
 			$('form [name="url"]').parent().hide();
 		}
 	}
