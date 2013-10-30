@@ -22,6 +22,22 @@ require(['media-attachment'], function(MediaAttachment) {
 	});
 	MediaAttachment.one('form .media-attachment');
 });
+require(['jquery', 'domready!'], function($) {
+	var handleSelect = function(el) {
+		if ($(el).val() == 'url') {
+			$('form .body').hide();
+			$('form [name="url"]').parent().show();
+		} else {
+			$('form .body').show();
+			$('form [name="url"]').parent().hide();
+		}
+	}
+	$('[name="content_type"').change(function(ev) {
+		handleSelect(this);
+	});
+	handleSelect('[name="content_type"]');
+});
+
 </script>
 <?php $this->scripts(ob_get_clean()) ?>
 
@@ -52,12 +68,27 @@ require(['media-attachment'], function(MediaAttachment) {
 			<?= $this->form->field('is_open_end', ['type' => 'checkbox', 'label' => $t('Open ended?'), 'checked' => $item->is_open_end]) ?>
 		</div>
 		<?= $this->form->field('location', ['type' => 'text', 'label' => $t('Location')]) ?>
+
 		<?= $this->form->field('teaser', [
 			'type' => 'textarea',
 			'label' => $t('Teaser'),
 			'wrap' => ['class' => 'teaser'],
 		]) ?>
-		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content'), 'wrap' => ['class' => 'body']]) ?>
+
+		<?= $this->form->field('content_type', [
+			'wrap' => ['class' => 'type-selector'],
+			'type' => 'select',
+			'label' => $t('Content Type'),
+			'value' => $item->url ? 'url' : 'body',
+			'list' => [
+				'body' => $t('Text'),
+				'url' => $t('Link')
+			]
+		]) ?>
+
+		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content Text'), 'wrap' => ['class' => 'body']]) ?>
+		<?= $this->form->field('url', ['type' => 'url', 'label' => $t('Content Link')]) ?>
+
 		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
 
 		<?php if ($features['connectFilmsWithEvents']): ?>

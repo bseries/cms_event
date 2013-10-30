@@ -23,7 +23,8 @@ class EventsController extends \lithium\action\Controller {
 	public function admin_index() {
 
 		$query = [
-			'with' => ['CoverMedia']
+			'with' => ['CoverMedia'],
+			'order' => ['created' => 'DESC']
 		];
 		$data = Events::find('all', $query);
 		return compact('data');

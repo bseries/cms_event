@@ -114,6 +114,9 @@ class Events extends \lithium\data\Model {
 			return $results;
 		}
 		foreach ($entity->films_events as $join) {
+			if (!$join->film->film_feature->id) {
+				continue;
+			}
 			$results[$join->film->film_feature->id] = $join->film->film_feature;
 		}
 		return $results;
