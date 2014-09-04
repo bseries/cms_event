@@ -15,15 +15,15 @@ use lithium\g11n\Message;
 
 extract(Message::aliases());
 
-Environment::set(true, array(
+Environment::set(true, [
 	'features' => [
 		// 'connectFilmsWithEvents' => false
 	],
-	'modules' => array(
-		'events' => array(
+	'modules' => [
+		'events' => [
 			'library' => 'cms_event', 'title' => $t('Events'), 'name' => 'events', 'slug' => 'events'
-		)
-	)
-));
+		]
+	]
+]);
 
 ?>

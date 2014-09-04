@@ -101,10 +101,10 @@ class Events extends \lithium\data\Model {
 		if ($entity->url && !$entity->body) {
 			return $entity->url;
 		}
-		return array(
+		return [
 			'controller' => 'events', 'action' => 'view',
 			'id' => $entity->id, 'library' => 'app'
-		);
+		];
 	}
 
 	public function filmFeatures($entity) {
