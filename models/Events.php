@@ -98,19 +98,31 @@ class Events extends \base_core\models\Base {
 	public static function upcoming(array $query = []) {
 		return static::find('all', Set::merge([
 			'conditions' => [
-				'start' => ['>' => date('Y-m-d')]
+				// Once start is equal today event becomes current.
+				'start' => ['>' => date('Y-m-d')],
+				// Assumes that if start didn't happen already
+				// end also didn't happen, as start should be before end.
 			],
 			'order' => ['start' => 'DESC']
 		], $query));
 	}
 
+	// Start and end date are inclusive.
 	public static function current(array $query = []) {
 		return static::find('all', Set::merge([
 			'conditions' => [
-				'start' => ['<' => date('Y-m-d')],
-				'or' => [
-					'end' => ['>' => date('Y-m-d')],
-					'is_open_end' => true
+				'OR' => [
+					// Either the event has no end date, then
+					// its active just on the current day.
+					[
+						'start' => date('Y-m-d'),
+						'end' => null
+					],
+					// Or it has an end date and is in range.
+					[
+						'start' => ['<=' => date('Y-m-d')],
+						'end' => ['>=' => date('Y-m-d')],
+					]
 				]
 			],
 			'order' => ['start' => 'DESC']
@@ -120,10 +132,17 @@ class Events extends \base_core\models\Base {
 	public static function previous(array $query = []) {
 		return static::find('all', Set::merge([
 			'conditions' => [
-				'start' => ['<' => date('Y-m-d')],
-				'or' => [
-					'end' => ['<' => date('Y-m-d')],
-					'is_open_end' => false
+				'OR' => [
+					// Either the event has no end date, then
+					// its active just on the current day.
+					[
+						'start' => ['<' => date('Y-m-d')],
+						'end' => null
+					],
+					// Or it has an end date and is in range.
+					[
+						'end' => ['<' => date('Y-m-d')],
+					]
 				]
 			],
 			'order' => ['start' => 'DESC']
