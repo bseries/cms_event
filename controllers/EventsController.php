@@ -12,7 +12,7 @@
 
 namespace cms_event\controllers;
 
-class EventsController extends \lithium\action\Controller {
+class EventsController extends \base_core\controllers\BaseController {
 
 	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
