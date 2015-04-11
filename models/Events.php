@@ -1,6 +1,6 @@
 <?php
 /**
- * Bureau Event
+ * CMS Event
  *
  * Copyright (c) 2013 Atelier Disko - All rights reserved.
  *
@@ -12,70 +12,69 @@
 
 namespace cms_event\models;
 
-use cms_film\models\FilmFeatures;
-use cms_film\models\Film;
-use cms_film\models\FilmsEvents;
 use lithium\core\Environment;
 use lithium\util\Validator;
 use lithium\util\Set;
 use DateTime;
+use lithium\g11n\Message;
 
-class Events extends \lithium\data\Model {
+class Events extends \base_core\models\Base {
 
-	use \li3_behaviors\data\model\Behaviors;
+	use \base_core\models\SlugTrait;
 
 	public $belongsTo = [
 		'CoverMedia' => [
-			'to' => 'cms_media\models\Media',
+			'to' => 'base_media\models\Media',
 			'key' => 'cover_media_id'
 		]
 	];
 
-	public $hasMany = [
-		'FilmsEvents' => [
-			'to' => 'cms_film\models\FilmsEvents'
-		]
-	];
-
-	protected $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp',
+	protected static $_actsAs = [
+		'base_media\extensions\data\behavior\Coupler' => [
+			'bindings' => [
+				'cover' => [
+					'type' => 'direct',
+					'to' => 'cover_media_id'
+				]
+			]
+		],
+		'base_core\extensions\data\behavior\Timestamp',
 		'li3_taggable\extensions\data\behavior\Taggable' => [
 			'field' => 'tags',
 			'tagModel' => false,
 			'filters' => ['strtolower']
+		],
+		'base_core\extensions\data\behavior\Searchable' => [
+			'fields' => [
+				'title',
+				'tags'
+			]
 		]
 	];
 
-	public static function __init() {
-		$features = Environment::get('features');
-
+	public static function init() {
 		$model = static::_object();
-
-		if ($features['connectFilmsWithEvents']) {
-			$model->hasMany['FilmsEvents'] = [
-				'to' => 'cms_film\models\FilmsEvents'
-			];
-		}
+		extract(Message::aliases());
 
 		$model->validates['title'] = [
 			[
 				'notEmpty',
 				'on' => ['create', 'update'],
-				'message' => 'Dieses Feld darf nicht leer sein.'
+				'message' => $t('This field cannot be left blank.', ['scope' => 'cms_event'])
 			]
 		];
 		$model->validates['start'] = [
 			[
 				'notEmpty',
 				'on' => ['create', 'update'],
-				'message' => 'Es muss ein Startdatum angegeben werden.'
+				'message' => $t('This field cannot be left blank.', ['scope' => 'cms_event'])
 			]
 		];
 		$model->validates['tags'] = [
 			[
 				'noSpacesInTags',
 				'on' => ['create', 'update'],
-				'message' => 'Es sind keine Leerzeichen innerhalb von Tags erlaubt.'
+				'message' => $t('Spaces cannot be used inside tags.', ['scope' => 'cms_event'])
 			]
 		];
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
@@ -94,32 +93,6 @@ class Events extends \lithium\data\Model {
 
 	public function end($entity) {
 		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
-	}
-
-	// Canonical URL for the event.
-	public function url($entity) {
-		if ($entity->url && !$entity->body) {
-			return $entity->url;
-		}
-		return [
-			'controller' => 'events', 'action' => 'view',
-			'id' => $entity->id, 'library' => 'app'
-		];
-	}
-
-	public function filmFeatures($entity) {
-		$results = [];
-
-		if (!$entity->films_events) {
-			return $results;
-		}
-		foreach ($entity->films_events as $join) {
-			if (!$join->film->film_feature->id) {
-				continue;
-			}
-			$results[$join->film->film_feature->id] = $join->film->film_feature;
-		}
-		return $results;
 	}
 
 	public static function upcoming(array $query = []) {
@@ -157,32 +130,6 @@ class Events extends \lithium\data\Model {
 		], $query));
 	}
 }
-
-Events::applyFilter('save', function($self, $params, $chain) {
-	$data =& $params['data'];
-
-	$films = [];
-	if (isset($data['films'])) {
-		$films = $data['films'];
-		unset($data['films']);
-	}
-	$result = $chain->next($self, $params, $chain);
-
-	if (!$result) {
-		return false;
-	}
-	if ($films) {
-		$results = FilmsEvents::find('all', [
-			'conditions' => ['event_id' => $params['entity']->id]
-		]);
-		$results->delete();
-
-		foreach ($films as $id) {
-			$join = FilmsEvents::create(['film_id' => $id, 'event_id' => $params['entity']->id]);
-			$join->save();
-		}
-	}
-	return true;
-});
+Events::init();
 
 ?>

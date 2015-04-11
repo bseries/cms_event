@@ -1,6 +1,6 @@
 <?php
 /**
- * Bureau Event
+ * CMS Event
  *
  * Copyright (c) 2013 Atelier Disko - All rights reserved.
  *
@@ -10,20 +10,15 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-use lithium\core\Environment;
+use base_core\extensions\cms\Panes;
 use lithium\g11n\Message;
 
 extract(Message::aliases());
 
-Environment::set(true, [
-	'features' => [
-		// 'connectFilmsWithEvents' => false
-	],
-	'modules' => [
-		'events' => [
-			'library' => 'cms_event', 'title' => $t('Events'), 'name' => 'events', 'slug' => 'events'
-		]
-	]
+Panes::register('authoring.events', [
+	'title' => $t('Events', ['scope' => 'cms_event']),
+	'url' => ['controller' => 'events', 'action' => 'index', 'library' => 'cms_event', 'admin' => true],
+	'weight' => 50
 ]);
 
 ?>

@@ -1,5 +1,5 @@
-BUREAU Event
--- Event module for bureau.
+CMS Event
+-- Event functionality for Bureau.
 
 Synopsis
 --------
@@ -7,11 +7,11 @@ n/a
 
 Authors
 -------
-David Persson for Atelier Disko (david@atelierdisko.de).
+David M. Persson for Atelier Disko (david@atelierdisko.de).
 
 Copyright & License
 -------------------
-Bureau Event is Copyright (c) 2013 Atelier Disko - All rights reserved.
+This library is Copyright (c) 2013 Atelier Disko - All rights reserved.
 
 -- This software is proprietary and confidential. Redistributions   --
 -- not permitted. Unless required by applicable law or agreed to    --
@@ -21,17 +21,3 @@ Bureau Event is Copyright (c) 2013 Atelier Disko - All rights reserved.
 Copyright and license information for contained 3rd party libraries can
 be found in (a) the `doc/licenses` directory, (b) the header of the files
 contained in the library or (c) the directory of the library.
-
-Versions & Requirements
------------------------
-Bureau follows the rolling release development model. Code in the master
-branch should always considered to be stable. While code in the dev branch
-should be considered unstable or sometimes even expiremental.
-
-There are no versions as in the standard release development model but
-snapshots. The master branch may be tagged ("snapshotted") at any point in
-time when a significant point of development has been reached.
-
-Snapshots are schemed as follows:
-[current year, two digit].[index, zero based]
-

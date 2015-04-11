@@ -1,105 +1,94 @@
 <?php
 
-use lithium\core\Environment;
+use base_core\extensions\cms\Settings;
+use lithium\security\Auth;
+use lithium\g11n\Message;
 
-$features = Environment::get('features');
+$t = function($message, array $options = []) {
+	return Message::translate($message, $options + ['scope' => 'cms_event', 'default' => $message]);
+};
+
+$this->set([
+	'page' => [
+		'type' => 'single',
+		'title' => $item->title,
+		'empty' => $t('untitled'),
+		'object' => $t('event')
+	],
+	'meta' => [
+		'is_published' => $item->is_published ? $t('published') : $t('unpublished')
+	]
+]);
 
 ?>
-<?php ob_start() ?>
-<script>
-require(['editor'], function(Editor) {
-	Editor.make('form .teaser textarea', true);
-	Editor.make('form .body textarea', true);
-});
-require(['media-attachment'], function(MediaAttachment) {
-	<?php $url = ['controller' => 'files', 'library' => 'cms_media', 'admin' => true] ?>
-
-	MediaAttachment.init({
-		endpoints: {
-			namespace: 'admin/api',
-			view: '<?= $this->url($url + ['action' => 'api_view', 'id' => '__ID__']) ?>'
-		}
-	});
-	MediaAttachment.one('form .media-attachment');
-});
-require(['jquery', 'domready!'], function($) {
-	var handleSelect = function(el) {
-		if ($(el).val() == 'url') {
-			$('form .body').hide();
-			$('form [name="url"]').parent().show();
-		} else {
-			$('form .body').show();
-			$('form [name="url"]').vale('');
-			$('form [name="url"]').parent().hide();
-		}
-	}
-	$('[name="content_type"').change(function(ev) {
-		handleSelect(this);
-	});
-	handleSelect('[name="content_type"]');
-});
-
-</script>
-<?php $this->scripts(ob_get_clean()) ?>
-
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
-	<h1 class="alpha"><?= $this->title($t('Event')) ?></h1>
-
+<article>
 	<?=$this->form->create($item) ?>
-		<?= $this->form->field('title', ['type' => 'text', 'label' => $t('Title')]) ?>
-		<div class="media-attachment">
-			<?= $this->form->label('EventsCoverMediaId', $t('Cover')) ?>
-			<?= $this->form->hidden('cover_media_id') ?>
-			<div class="selected"></div>
-			<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?= $this->form->field('title', ['type' => 'text', 'label' => $t('Title'), 'class' => 'use-for-title']) ?>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('start', [
+					'type' => 'date',
+					'label' => $t('Start'),
+					'value' => $item->start ?: date('Y-m-d')
+				]) ?>
+				<?= $this->form->field('end', [
+					'type' => 'date',
+					'label' => $t('End'),
+					'value' => $item->end
+				]) ?>
+				<div class="help"><?= $t('Setting a publish date allows to pre- or post-date this item. It is used for public display.') ?></div>
+
+				<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags'), 'placeholder' => 'foo, bar']) ?>
+				<div class="help"><?= $t('Separate multiple tags with commas.') ?></div>
+
+				<?= $this->form->field('location', [
+					'type' => 'text',
+					'label' => $t('Location')
+				]) ?>
+			</div>
 		</div>
-		<div class="date-range">
-			<label><?= $t('Start/end') ?></label>
-			<?= $this->form->field('start', [
-				'type' => 'date',
-				'label' => $t('Start'),
-				'value' => $item->start != '0000-00-00' ? $item->start : ''
-			]) ?>
-			<div class="separator">&mdash;</div>
-			<?= $this->form->field('end', [
-				'type' => 'date',
-				'label' => $t('End'),
-				'value' => $item->end != '0000-00-00' ? $item->end : ''
-			]) ?>
-			<?= $this->form->field('is_open_end', ['type' => 'checkbox', 'label' => $t('Open ended?'), 'checked' => $item->is_open_end]) ?>
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<div class="media-attachment use-media-attachment-direct">
+					<?= $this->form->label('PostsCoverMediaId', $t('Cover')) ?>
+					<?= $this->form->hidden('cover_media_id') ?>
+					<div class="selected"></div>
+					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
+				</div>
+			</div>
+			<div class="grid-column-right">
+
+			</div>
 		</div>
-		<?= $this->form->field('location', ['type' => 'text', 'label' => $t('Location')]) ?>
 
-		<?= $this->form->field('teaser', [
-			'type' => 'textarea',
-			'label' => $t('Teaser'),
-			'wrap' => ['class' => 'teaser'],
-		]) ?>
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?= $this->form->field('teaser', [
+					'type' => 'textarea',
+					'label' => $t('Teaser'),
+					'wrap' => ['class' => 'teaser use-editor editor-basic editor-link'],
+				]) ?>
+			</div>
+			<div class="grid-column-right">
 
-		<?= $this->form->field('content_type', [
-			'wrap' => ['class' => 'type-selector'],
-			'type' => 'select',
-			'label' => $t('Content Type'),
-			'value' => $item->url ? 'url' : 'body',
-			'list' => [
-				'body' => $t('Text'),
-				'url' => $t('Link')
-			]
-		]) ?>
+			</div>
+		</div>
 
-		<?= $this->form->field('body', ['type' => 'textarea', 'label' => $t('Content Text'), 'wrap' => ['class' => 'body']]) ?>
-		<?= $this->form->field('url', ['type' => 'url', 'label' => $t('Content Link')]) ?>
-
-		<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags')]) ?>
-
-		<?php if ($features['connectFilmsWithEvents']): ?>
-			<?= $this->form->field('films', [
-				'type' => 'select',
-				'multiple' => true,
-				'list' => $films,
-				'label' => $t('Associated Films')
+		<div class="grid-row">
+			<?= $this->form->field('body', [
+				'type' => 'textarea',
+				'label' => $t('Content'),
+				'wrap' => ['class' => 'body use-editor editor-basic editor-headline editor-size editor-line editor-link editor-list editor-media']
 			]) ?>
-		<?php endif ?>
-		<?= $this->form->button($t('save'), ['type' => 'submit']) ?>
+		</div>
+
+		<div class="bottom-actions">
+			<?php if ($item->exists()): ?>
+				<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'cms_event'], ['class' => 'button large']) ?>
+			<?php endif ?>
+			<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large save']) ?>
+		</div>
 	<?=$this->form->end() ?>
 </article>
