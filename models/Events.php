@@ -17,6 +17,8 @@ use lithium\util\Validator;
 use lithium\util\Set;
 use DateTime;
 use lithium\g11n\Message;
+use base_core\extensions\cms\Settings;
+use cms_event\models\ArtistDataShows;
 
 class Events extends \base_core\models\Base {
 
@@ -82,31 +84,6 @@ class Events extends \base_core\models\Base {
 		});
 	}
 
-	// Canonical sort date.
-	public function date($entity) {
-		return $this->start($entity);
-	}
-
-	public function start($entity) {
-		return DateTime::createFromFormat('Y-m-d', $entity->start);
-	}
-
-	public function end($entity) {
-		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
-	}
-
-	public static function upcoming(array $query = []) {
-		return static::find('all', Set::merge([
-			'conditions' => [
-				// Once start is equal today event becomes current.
-				'start' => ['>' => date('Y-m-d')],
-				// Assumes that if start didn't happen already
-				// end also didn't happen, as start should be before end.
-			],
-			'order' => ['start' => 'DESC']
-		], $query));
-	}
-
 	// Start and end date are inclusive.
 	public static function current(array $query = []) {
 		return static::find('all', Set::merge([
@@ -148,6 +125,69 @@ class Events extends \base_core\models\Base {
 			'order' => ['start' => 'DESC']
 		], $query));
 	}
+
+	public static function poll() {
+		$settings = Settings::read('service.artistData');
+
+		foreach ($settings as $s) {
+			if ($s['stream']) {
+				static::_pollArtistData($s);
+			}
+		}
+	}
+
+	public static function upcoming(array $query = []) {
+		return static::find('all', Set::merge([
+			'conditions' => [
+				// Once start is equal today event becomes current.
+				'start' => ['>' => date('Y-m-d')],
+				// Assumes that if start didn't happen already
+				// end also didn't happen, as start should be before end.
+			],
+			'order' => ['start' => 'DESC']
+		], $query));
+	}
+
+	protected static function _pollArtistData($config) {
+		$results = ArtistDataShows::all($config);
+
+		if (!$results) {
+			return $results;
+		}
+		foreach ($results as $result) {
+			$item = Events::find('first', [
+				'conditions' => [
+					'title' => $result->title,
+					'location' => $result->location,
+					'start' => $result->start,
+					'end' => $result->end
+				]
+			]);
+			if (!$item) {
+				$item = Events::create([
+					// Moved here as when autopublish is enabled it would otherwise
+					// force manually unpublised items to become published again.
+					'is_published' => $config['autopublish']
+				]);
+			}
+			$item->save($result->data());
+		}
+	}
+
+	// Canonical sort date.
+	public function date($entity) {
+		return $this->start($entity);
+	}
+
+	public function start($entity) {
+		return DateTime::createFromFormat('Y-m-d', $entity->start);
+	}
+
+	public function end($entity) {
+		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
+	}
+
+
 }
 Events::init();
 
