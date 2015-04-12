@@ -1,0 +1,136 @@
+# German translations for cms_event package.
+# Copyright (C) 2015 Atelier Disko
+# This file is distributed under the same license as the cms_event package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: cms_event 1.0\n"
+"Report-Msgid-Bugs-To: info@atelierdisko.de\n"
+"POT-Creation-Date: 2015-04-12 10:38+0200\n"
+"PO-Revision-Date: 2015-04-12 10:38+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/panes.php:19
+msgid "Events"
+msgstr ""
+
+#: models/Events.php:63 models/Events.php:70
+msgid "This field cannot be left blank."
+msgstr ""
+
+#: models/Events.php:77
+msgid "Spaces cannot be used inside tags."
+msgstr ""
+
+#: views/events/admin_form.html.php:15
+msgid "untitled"
+msgstr ""
+
+#: views/events/admin_form.html.php:16
+msgid "event"
+msgstr ""
+
+#: views/events/admin_form.html.php:19
+msgid "published"
+msgstr ""
+
+#: views/events/admin_form.html.php:19
+msgid "unpublished"
+msgstr ""
+
+#: views/events/admin_form.html.php:28 views/events/admin_index.html.php:39
+msgid "Title"
+msgstr ""
+
+#: views/events/admin_form.html.php:33 views/events/admin_index.html.php:40
+msgid "Start"
+msgstr ""
+
+#: views/events/admin_form.html.php:38 views/events/admin_index.html.php:41
+msgid "End"
+msgstr ""
+
+#: views/events/admin_form.html.php:41
+msgid ""
+"Setting a publish date allows to pre- or post-date this item. It is used for "
+"public display."
+msgstr ""
+
+#: views/events/admin_form.html.php:43
+msgid "Tags"
+msgstr ""
+
+#: views/events/admin_form.html.php:44
+msgid "Separate multiple tags with commas."
+msgstr ""
+
+#: views/events/admin_form.html.php:48 views/events/admin_index.html.php:42
+msgid "Location"
+msgstr ""
+
+#: views/events/admin_form.html.php:55
+msgid "Cover"
+msgstr ""
+
+#: views/events/admin_form.html.php:58
+msgid "select"
+msgstr ""
+
+#: views/events/admin_form.html.php:70
+msgid "Teaser"
+msgstr ""
+
+#: views/events/admin_form.html.php:82
+msgid "Content"
+msgstr ""
+
+#: views/events/admin_form.html.php:89 views/events/admin_index.html.php:80
+msgid "publish"
+msgstr ""
+
+#: views/events/admin_form.html.php:89 views/events/admin_index.html.php:80
+msgid "unpublish"
+msgstr ""
+
+#: views/events/admin_form.html.php:91
+msgid "save"
+msgstr ""
+
+#: views/events/admin_index.html.php:13
+msgid "events"
+msgstr ""
+
+#: views/events/admin_index.html.php:30
+msgid "new post"
+msgstr ""
+
+#: views/events/admin_index.html.php:37
+msgid "publ.?"
+msgstr ""
+
+#: views/events/admin_index.html.php:43
+msgid "Modified"
+msgstr ""
+
+#: views/events/admin_index.html.php:48
+msgid "Filter"
+msgstr ""
+
+#: views/events/admin_index.html.php:79
+msgid "delete"
+msgstr ""
+
+#: views/events/admin_index.html.php:81
+msgid "open"
+msgstr ""
+
+#: views/events/admin_index.html.php:86
+msgid "No items available, yet."
+msgstr ""
