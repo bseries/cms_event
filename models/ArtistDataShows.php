@@ -36,6 +36,7 @@ class ArtistDataShows extends \base_core\models\Base {
 				'title' => $result['name'],
 				'location' => rtrim($result['venueName']) . ', ' . $result['city'] . ', ' . $result['country'],
 				'modified' => $result['lastUpdate'],
+				'is_sold_out' => (boolean) $result['ticketURI'],
 				'ticket_url' => $result['ticketURI'],
 				'start' => $result['date'],
 				'end' => null

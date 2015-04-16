@@ -16,7 +16,8 @@ $this->set([
 		'object' => $t('event')
 	],
 	'meta' => [
-		'is_published' => $item->is_published ? $t('published') : $t('unpublished')
+		'is_published' => $item->is_published ? $t('published') : $t('unpublished'),
+		'is_sold_out' => $item->is_sold_out ? $t('sold out') : $t('tickets available')
 	]
 ]);
 
@@ -38,10 +39,6 @@ $this->set([
 					'label' => $t('End'),
 					'value' => $item->end
 				]) ?>
-				<div class="help"><?= $t('Setting a publish date allows to pre- or post-date this item. It is used for public display.') ?></div>
-
-				<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags'), 'placeholder' => 'foo, bar']) ?>
-				<div class="help"><?= $t('Separate multiple tags with commas.') ?></div>
 
 				<?= $this->form->field('location', [
 					'type' => 'text',
@@ -60,6 +57,24 @@ $this->set([
 			</div>
 			<div class="grid-column-right">
 
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('ticket_url', [
+					'type' => 'text',
+					'label' => $t('Ticket Link'),
+					'placeholder' => $t('https://foo.com/bar or /bar')]
+				) ?>
+				<?= $this->form->field('is_sold_out', [
+					'type' => 'checkbox',
+					'label' => $t('sold out'),
+					'checked' => (boolean) $item->is_sold_out,
+					'value' => 1
+				]) ?>
 			</div>
 		</div>
 

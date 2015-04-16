@@ -41,11 +41,6 @@ class Events extends \base_core\models\Base {
 			]
 		],
 		'base_core\extensions\data\behavior\Timestamp',
-		'li3_taggable\extensions\data\behavior\Taggable' => [
-			'field' => 'tags',
-			'tagModel' => false,
-			'filters' => ['strtolower']
-		],
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
 				'title',
@@ -187,7 +182,16 @@ class Events extends \base_core\models\Base {
 		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
 	}
 
+	// FIXME Handle end/start ranges
+	public function isPrevious($entity) {
+		$now = new DateTime();
+		return $now->diff($entity->start())->days < 0;
+	}
 
+	public function isUpcoming($entity) {
+		$now = new DateTime();
+		return $now->diff($entity->start())->days > 0;
+	}
 }
 Events::init();
 

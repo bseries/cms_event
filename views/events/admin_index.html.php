@@ -27,7 +27,7 @@ $this->set([
 >
 
 	<div class="top-actions">
-		<?= $this->html->link($t('new post'), ['action' => 'add'], ['class' => 'button add']) ?>
+		<?= $this->html->link($t('new event'), ['action' => 'add'], ['class' => 'button add']) ?>
 	</div>
 
 	<?php if ($data->count()): ?>
@@ -35,6 +35,7 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="is-published" class="flag is-published table-sort"><?= $t('publ.?') ?>
+					<td data-sort="is-sold-out" class="flag is-sold-out table-sort"><?= $t('sold?') ?>
 					<td class="media">
 					<td data-sort="title" class="emphasize title table-sort"><?= $t('Title') ?>
 					<td data-sort="start" class="date table-sort"><?= $t('Start') ?>
@@ -54,6 +55,7 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr>
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
 
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
