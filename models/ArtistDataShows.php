@@ -24,7 +24,7 @@ class ArtistDataShows extends \base_core\models\Base {
 	];
 
 	public static function all(array $config) {
-		$results = static::_api("{$config['username']}/shows/xml/future", $config);
+		$results = static::_api("{$config['username']}/shows/xml", $config);
 
 		if (!$results) {
 			return $results;
@@ -36,7 +36,10 @@ class ArtistDataShows extends \base_core\models\Base {
 				'title' => $result['name'],
 				'location' => rtrim($result['venueName']) . ', ' . $result['city'] . ', ' . $result['country'],
 				'modified' => $result['lastUpdate'],
-				'is_sold_out' => (boolean) $result['ticketURI'],
+				// We cannot derive sold out status from presence of ticket link,
+				// as usage is insonsisten.
+				// 'is_sold_out' => !$result['ticketURI'],
+				'is_sold_out' => false,
 				'ticket_url' => $result['ticketURI'],
 				'start' => $result['date'],
 				'end' => null

@@ -12,6 +12,7 @@
 
 namespace cms_event\models;
 
+use lithium\analysis\Logger;
 use lithium\core\Environment;
 use lithium\util\Validator;
 use lithium\util\Set;
@@ -71,6 +72,7 @@ class Events extends \base_core\models\Base {
 			[
 				'noSpacesInTags',
 				'on' => ['create', 'update'],
+				'required' => false,
 				'message' => $t('Spaces cannot be used inside tags.', ['scope' => 'cms_event'])
 			]
 		];
@@ -165,7 +167,9 @@ class Events extends \base_core\models\Base {
 					'is_published' => $config['autopublish']
 				]);
 			}
-			$item->save($result->data());
+			if (!$item->save($result->data())) {
+				Logger::notice('Failed to save artist data event: '. var_export($item->data(), true));
+			}
 		}
 	}
 
