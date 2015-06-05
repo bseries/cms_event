@@ -48,21 +48,17 @@ $this->set([
 		</div>
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<div class="media-attachment use-media-attachment-direct">
-					<?= $this->form->label('PostsCoverMediaId', $t('Cover')) ?>
-					<?= $this->form->hidden('cover_media_id') ?>
-					<div class="selected"></div>
-					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
-				</div>
+				<?= $this->media->field('cover_media_id', [
+					'label' => $t('Cover'),
+					'attachment' => 'direct',
+					'value' => $item->cover()
+				]) ?>
 			</div>
-			<div class="grid-column-right">
-
-			</div>
+			<div class="grid-column-right"></div>
 		</div>
 
 		<div class="grid-row">
-			<div class="grid-column-left">
-			</div>
+			<div class="grid-column-left"></div>
 			<div class="grid-column-right">
 				<?= $this->form->field('ticket_url', [
 					'type' => 'text',
