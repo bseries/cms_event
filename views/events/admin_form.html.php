@@ -80,22 +80,20 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('teaser', [
-					'type' => 'textarea',
+				<?= $this->editor->field('teaser', [
 					'label' => $t('Teaser'),
-					'wrap' => ['class' => 'teaser use-editor editor-basic editor-link'],
+					'size' => 'gamma',
+					'features' => 'minimal'
 				]) ?>
 			</div>
-			<div class="grid-column-right">
-
-			</div>
+			<div class="grid-column-right"></div>
 		</div>
 
 		<div class="grid-row">
-			<?= $this->form->field('body', [
-				'type' => 'textarea',
+			<?= $this->editor->field('body', [
 				'label' => $t('Content'),
-				'wrap' => ['class' => 'body use-editor editor-basic editor-headline editor-size editor-line editor-link editor-list editor-media']
+				'size' => 'beta',
+				'features' => 'full'
 			]) ?>
 		</div>
 
