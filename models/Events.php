@@ -23,8 +23,6 @@ use cms_event\models\ArtistDataShows;
 
 class Events extends \base_core\models\Base {
 
-	use \base_core\models\SlugTrait;
-
 	public $belongsTo = [
 		'CoverMedia' => [
 			'to' => 'base_media\models\Media',
@@ -33,6 +31,7 @@ class Events extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_media\extensions\data\behavior\Sluggable',
 		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
 				'cover' => [
