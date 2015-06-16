@@ -42,6 +42,9 @@ $this->set([
 					<td data-sort="end" class="date table-sort"><?= $t('End') ?>
 					<td data-sort="location" class="table-sort"><?= $t('Location') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
+					<?php if ($useOwner): ?>
+						<td class="user"><?= $t('Owner') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -77,6 +80,10 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
+					<?php if ($useOwner): ?>
+						<td class="user">
+							<?= $item->user()->name ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_event'], ['class' => 'button delete']) ?>
 						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'cms_event'], ['class' => 'button']) ?>
