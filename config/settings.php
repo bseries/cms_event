@@ -18,4 +18,6 @@ Settings::register('service.artistData.default', [
 	'username' => null
 ]);
 
+Settings::register('event.enableTickets', false);
+
 ?>

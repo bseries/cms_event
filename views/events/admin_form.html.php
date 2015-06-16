@@ -57,22 +57,26 @@ $this->set([
 			<div class="grid-column-right"></div>
 		</div>
 
-		<div class="grid-row">
-			<div class="grid-column-left"></div>
-			<div class="grid-column-right">
-				<?= $this->form->field('ticket_url', [
-					'type' => 'text',
-					'label' => $t('Ticket Link'),
-					'placeholder' => $t('https://foo.com/bar or /bar')]
-				) ?>
-				<?= $this->form->field('is_sold_out', [
-					'type' => 'checkbox',
-					'label' => $t('sold out'),
-					'checked' => (boolean) $item->is_sold_out,
-					'value' => 1
-				]) ?>
+		<?php if (Settings::read('event.useTicketing')): ?>
+			<div class="grid-row">
+				<h1><?= $t('Ticketing') ?></h1>
+
+				<div class="grid-column-left"></div>
+				<div class="grid-column-right">
+					<?= $this->form->field('ticket_url', [
+						'type' => 'text',
+						'label' => $t('Ticket Link'),
+						'placeholder' => $t('https://foo.com/bar or /bar')]
+					) ?>
+					<?= $this->form->field('is_sold_out', [
+						'type' => 'checkbox',
+						'label' => $t('sold out'),
+						'checked' => (boolean) $item->is_sold_out,
+						'value' => 1
+					]) ?>
+				</div>
 			</div>
-		</div>
+		<?php endif ?>
 
 		<div class="grid-row">
 			<div class="grid-column-left">
