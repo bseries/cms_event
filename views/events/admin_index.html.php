@@ -35,12 +35,13 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="is-published" class="flag is-published table-sort"><?= $t('publ.?') ?>
-					<td data-sort="is-sold-out" class="flag is-sold-out table-sort"><?= $t('sold?') ?>
+					<?php if (Settings::read('event.useTicketing')): ?>
+						<td data-sort="is-sold-out" class="flag is-sold-out table-sort"><?= $t('sold?') ?>
+					<?php endif ?>
 					<td class="media">
 					<td data-sort="title" class="emphasize title table-sort"><?= $t('Title') ?>
 					<td data-sort="start" class="date table-sort"><?= $t('Start') ?>
 					<td data-sort="end" class="date table-sort"><?= $t('End') ?>
-					<td data-sort="location" class="table-sort"><?= $t('Location') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<?php if ($useOwner): ?>
 						<td class="user"><?= $t('Owner') ?>
@@ -58,7 +59,9 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr>
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
-					<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
+					<?php if (Settings::read('event.useTicketing')): ?>
+						<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
+					<?php endif ?>
 
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
@@ -75,7 +78,6 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->end, 'w3c') ?>">
 							<?= $this->date->format($item->end, 'date') ?>
 						</time>
-					<td class="location"><?= $item->location ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>

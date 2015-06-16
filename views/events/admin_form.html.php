@@ -8,6 +8,14 @@ $t = function($message, array $options = []) {
 	return Message::translate($message, $options + ['scope' => 'cms_event', 'default' => $message]);
 };
 
+$meta = [
+	'is_published' => $item->is_published ? $t('published') : $t('unpublished'),
+];
+
+if (Settings::read('event.useTicketing')) {
+	$meta['is_sold_out'] = $item->is_sold_out ? $t('sold out') : $t('tickets available');
+}
+
 $this->set([
 	'page' => [
 		'type' => 'single',
@@ -15,10 +23,7 @@ $this->set([
 		'empty' => $t('untitled'),
 		'object' => $t('event')
 	],
-	'meta' => [
-		'is_published' => $item->is_published ? $t('published') : $t('unpublished'),
-		'is_sold_out' => $item->is_sold_out ? $t('sold out') : $t('tickets available')
-	]
+	'meta' => $meta
 ]);
 
 ?>
