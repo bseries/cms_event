@@ -35,7 +35,7 @@ $this->set([
 
 				<div class="grid-column-left"></div>
 				<div class="grid-column-right">
-					<?= $this->form->field('user_id', [
+					<?= $this->form->field('owner_id', [
 						'type' => 'select',
 						'label' => $t('Owner'),
 						'list' => $users
