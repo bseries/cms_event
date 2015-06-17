@@ -58,7 +58,7 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr>
-					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag"><i class="material-icons"><?= ($item->is_published ? 'done' : '') ?></i>
 					<?php if (Settings::read('event.useTicketing')): ?>
 						<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
 					<?php endif ?>
