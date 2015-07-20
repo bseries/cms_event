@@ -24,6 +24,10 @@ use cms_event\models\ArtistDataShows;
 class Events extends \base_core\models\Base {
 
 	public $belongsTo = [
+		'Owner' => [
+			'to' => 'base_core\models\Users',
+			'key' => 'owner_id'
+		],
 		'CoverMedia' => [
 			'to' => 'base_media\models\Media',
 			'key' => 'cover_media_id'
@@ -44,6 +48,7 @@ class Events extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
+				'Owner.name',
 				'title',
 				'tags'
 			]
