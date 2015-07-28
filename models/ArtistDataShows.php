@@ -54,6 +54,12 @@ class ArtistDataShows extends \base_core\models\Base {
 		$results = [];
 
 		$searchSimilar = function($results, $item) {
+			// Never try to match items that per definition are standalone items.
+			if (stripos($item->title, 'Zusatzkonzert') !== false) {
+				return false;
+			}
+
+			// Find similar from existing and return the key of the similar result.
 			foreach ($results as $k => $result) {
 				if (soundex($item->title) != soundex($result->title)) {
 					continue;
