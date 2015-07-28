@@ -66,6 +66,9 @@ class ArtistDataShows extends \base_core\models\Base {
 
 			// Find similar from existing and return the key of the similar result.
 			foreach ($results as $k => $result) {
+				if (stripos($result->title, 'Zusatzkonzert') !== false) {
+					continue;
+				}
 				if (soundex($item->title) != soundex($result->title)) {
 					continue;
 				}
