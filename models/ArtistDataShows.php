@@ -17,7 +17,7 @@
 
 namespace cms_event\models;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 use lithium\analysis\Logger;
 use lithium\util\Collection;
 use DateTime;

@@ -15,7 +15,7 @@
         "atelierdisko/base_core": "1.4.*",
         "atelierdisko/base_media": "1.4.*",
         "atelierdisko/cms_core": "1.4.*",
-        "guzzlehttp/guzzle": "3.8.*@stable",
+        "guzzlehttp/guzzle": "6.*@stable",
         "unionofrad/lithium": "1.0.*@dev",
         "composer/installers": "1.*@stable"
     },
