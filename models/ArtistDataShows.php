@@ -112,11 +112,10 @@ class ArtistDataShows extends \base_core\models\Base {
 	}
 
 	protected static function _api($url, array $config, array $params = []) {
-		$client = new Client('http://artistdata.sonicbids.com/');
-		$request = $client->get($url);
+		$client = new Client(['base_uri' => 'http://artistdata.sonicbids.com/']);
 
 		try {
-			$response = $request->send();
+			$response = $client->request('GET', $url);
 		} catch (\Exception $e) {
 			Logger::notice('Failed ArtistData-Feed request: ' . $e->getMessage());
 			return false;
