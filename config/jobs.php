@@ -17,7 +17,7 @@
 
 namespace cms_event\config;
 
-use base_core\extensions\cms\Jobs;
+use base_core\async\Jobs;
 use cms_event\models\Events;
 
 Jobs::recur('cms_event:stream', function() {
