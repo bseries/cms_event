@@ -203,8 +203,7 @@ class Events extends \base_core\models\Base {
 	}
 
 	public function isUpcoming($entity) {
-		$now = new DateTime();
-		return $now->diff($entity->start())->days > 0;
+		return $entity->start()->getTimestamp() - time() > 0;
 	}
 }
 Events::init();
