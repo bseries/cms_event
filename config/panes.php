@@ -22,7 +22,7 @@ use lithium\g11n\Message;
 
 extract(Message::aliases());
 
-Panes::register('authoring.events', [
+Panes::register('cms.events', [
 	'title' => $t('Events', ['scope' => 'cms_event']),
 	'url' => ['controller' => 'events', 'action' => 'index', 'library' => 'cms_event', 'admin' => true],
 	'weight' => 50
