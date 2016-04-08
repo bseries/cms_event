@@ -134,9 +134,7 @@ class Events extends \base_core\models\Base {
 	}
 
 	public static function poll() {
-		$settings = Settings::read('service.artistData');
-
-		foreach ($settings as $s) {
+		foreach (Settings::read('service.artistData') as $s) {
 			if ($s['stream']) {
 				static::_pollArtistData($s);
 			}
