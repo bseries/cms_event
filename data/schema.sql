@@ -1,5 +1,6 @@
 CREATE TABLE `events` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `owner_id` int(11) unsigned NOT NULL,
   `cover_media_id` int(11) DEFAULT NULL,
   `title` varchar(250) NOT NULL DEFAULT '',
   `start` date NOT NULL,
