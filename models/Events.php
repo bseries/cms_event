@@ -99,13 +99,17 @@ class Events extends \base_core\models\Base {
 				// Either the event has no end date, then
 				// its active just on the current day.
 				[
-					'start' => date('Y-m-d'),
-					'end' => null
+					'AND' => [
+						'start' => date('Y-m-d'),
+						'end' => null
+					]
 				],
 				// Or it has an end date and is in range.
 				[
-					'start' => ['<=' => date('Y-m-d')],
-					'end' => ['>=' => date('Y-m-d')],
+					'AND' => [
+						'start' => ['<=' => date('Y-m-d')],
+						'end' => ['>=' => date('Y-m-d')],
+					]
 				]
 			];
 			return $chain->next($self, $params, $chain);
@@ -119,8 +123,10 @@ class Events extends \base_core\models\Base {
 				// Either the event has no end date, then
 				// its active just on the current day.
 				[
-					'start' => ['<' => date('Y-m-d')],
-					'end' => null
+					'AND' => [
+						'start' => ['<' => date('Y-m-d')],
+						'end' => null
+					]
 				],
 				// Or it has an end date and is in range.
 				[
@@ -151,7 +157,6 @@ class Events extends \base_core\models\Base {
 			}
 		}
 	}
-
 
 	protected static function _pollArtistData($config) {
 		$results = ArtistDataShows::all($config);
