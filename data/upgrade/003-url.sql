@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `url` VARCHAR(250)  NULL  DEFAULT NULL  AFTER `body`;

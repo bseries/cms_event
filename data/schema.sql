@@ -8,6 +8,7 @@ CREATE TABLE `events` (
   `location` varchar(250) DEFAULT NULL,
   `teaser` text,
   `body` text NOT NULL,
+  `url` varchar(250) DEFAULT NULL,
   `tags` varchar(250) DEFAULT NULL,
   `ticket_url` varchar(250) DEFAULT NULL,
   `is_sold_out` tinyint(1) unsigned NOT NULL DEFAULT '0',

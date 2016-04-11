@@ -63,6 +63,13 @@ $this->set([
 					'type' => 'text',
 					'label' => $t('Location')
 				]) ?>
+
+				<?= $this->form->field('url', [
+					'type' => 'text',
+					'label' => $t('Link'),
+					'placeholder' => $t('https://foo.com/bar or /bar')]
+				) ?>
+				<div class="help"><?= $t('Provide an URL to i.e. the event details page.') ?></div>
 			</div>
 		</div>
 		<div class="grid-row">
