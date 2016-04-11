@@ -92,10 +92,10 @@ class Events extends \base_core\models\Base {
 
 		// Start and end date are inclusive.
 		static::finder('current', function($self, $params, $chain) {
-			if (isset($params['conditions']['or']) || isset($params['conditions']['OR'])) {
+			if (isset($params['options']['conditions']['or']) || isset($params['options']['conditions']['OR'])) {
 				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
 			}
-			$params['conditions']['OR'] = [
+			$params['options']['conditions']['OR'] = [
 				// Either the event has no end date, then
 				// its active just on the current day.
 				[
@@ -112,10 +112,10 @@ class Events extends \base_core\models\Base {
 		});
 
 		static::finder('previous', function($self, $params, $chain) {
-			if (isset($params['conditions']['or']) || isset($params['conditions']['OR'])) {
+			if (isset($params['options']['conditions']['or']) || isset($params['options']['conditions']['OR'])) {
 				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
 			}
-			$params['conditions']['OR'] = [
+			$params['options']['conditions']['OR'] = [
 				// Either the event has no end date, then
 				// its active just on the current day.
 				[
@@ -131,12 +131,12 @@ class Events extends \base_core\models\Base {
 		});
 
 		static::finder('upcoming', function($self, $params, $chain) {
-			if (isset($params['conditions']['start'])) {
+			if (isset($params['options']['conditions']['start'])) {
 				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
 			}
-			$params['conditions'] += [
+			$params['options']['conditions']['start'] = [
 				// Once start is equal today event becomes current.
-				'start' => ['>' => date('Y-m-d')],
+				'>' => date('Y-m-d')
 				// Assumes that if start didn't happen already
 				// end also didn't happen, as start should be before end.
 			];
