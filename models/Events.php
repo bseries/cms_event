@@ -89,48 +89,59 @@ class Events extends \base_core\models\Base {
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
 			return empty($value) || preg_match('/^([a-z0-9]+)(\s?,\s?[a-z0-9]+)*$/i', $value);
 		});
-	}
 
-	// Start and end date are inclusive.
-	public static function current(array $query = []) {
-		return static::find('all', Set::merge([
-			'conditions' => [
-				'OR' => [
-					// Either the event has no end date, then
-					// its active just on the current day.
-					[
-						'start' => date('Y-m-d'),
-						'end' => null
-					],
-					// Or it has an end date and is in range.
-					[
-						'start' => ['<=' => date('Y-m-d')],
-						'end' => ['>=' => date('Y-m-d')],
-					]
+		// Start and end date are inclusive.
+		static::finder('current', function($self, $params, $chain) {
+			if (isset($params['conditions']['or']) || isset($params['conditions']['OR'])) {
+				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
+			}
+			$params['conditions']['OR'] = [
+				// Either the event has no end date, then
+				// its active just on the current day.
+				[
+					'start' => date('Y-m-d'),
+					'end' => null
+				],
+				// Or it has an end date and is in range.
+				[
+					'start' => ['<=' => date('Y-m-d')],
+					'end' => ['>=' => date('Y-m-d')],
 				]
-			],
-			'order' => ['start' => 'DESC']
-		], $query));
-	}
+			];
+			return $chain->next($self, $params, $chain);
+		});
 
-	public static function previous(array $query = []) {
-		return static::find('all', Set::merge([
-			'conditions' => [
-				'OR' => [
-					// Either the event has no end date, then
-					// its active just on the current day.
-					[
-						'start' => ['<' => date('Y-m-d')],
-						'end' => null
-					],
-					// Or it has an end date and is in range.
-					[
-						'end' => ['<' => date('Y-m-d')],
-					]
+		static::finder('previous', function($self, $params, $chain) {
+			if (isset($params['conditions']['or']) || isset($params['conditions']['OR'])) {
+				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
+			}
+			$params['conditions']['OR'] = [
+				// Either the event has no end date, then
+				// its active just on the current day.
+				[
+					'start' => ['<' => date('Y-m-d')],
+					'end' => null
+				],
+				// Or it has an end date and is in range.
+				[
+					'end' => ['<' => date('Y-m-d')],
 				]
-			],
-			'order' => ['start' => 'DESC']
-		], $query));
+			];
+			return $chain->next($self, $params, $chain);
+		});
+
+		static::finder('upcoming', function($self, $params, $chain) {
+			if (isset($params['conditions']['start'])) {
+				trigger_error('Potential query conditions overlap.', E_USER_WARNING);
+			}
+			$params['conditions'] += [
+				// Once start is equal today event becomes current.
+				'start' => ['>' => date('Y-m-d')],
+				// Assumes that if start didn't happen already
+				// end also didn't happen, as start should be before end.
+			];
+			return $chain->next($self, $params, $chain);
+		});
 	}
 
 	public static function poll() {
@@ -141,17 +152,6 @@ class Events extends \base_core\models\Base {
 		}
 	}
 
-	public static function upcoming(array $query = []) {
-		return static::find('all', Set::merge([
-			'conditions' => [
-				// Once start is equal today event becomes current.
-				'start' => ['>' => date('Y-m-d')],
-				// Assumes that if start didn't happen already
-				// end also didn't happen, as start should be before end.
-			],
-			'order' => ['start' => 'DESC']
-		], $query));
-	}
 
 	protected static function _pollArtistData($config) {
 		$results = ArtistDataShows::all($config);
@@ -194,16 +194,37 @@ class Events extends \base_core\models\Base {
 		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
 	}
 
-	// FIXME Handle end/start ranges
 	public function isPrevious($entity) {
 		$now = new DateTime();
+
+		if ($entity->end) {
+			return $now->diff($entity->start())->days < 0;
+		}
 		return $now->diff($entity->start())->days < 0;
 	}
 
 	public function isUpcoming($entity) {
 		return $entity->start()->getTimestamp() - time() > 0;
 	}
+
+	/* Deprecated / BC */
+
+	public static function current(array $query = []) {
+		trigger_error('::current() is deprecated in favor of find(current)', E_USER_DEPRECATED);
+		return static::find('current', $query);
+	}
+
+	public static function previous(array $query = []) {
+		trigger_error('::previous() is deprecated in favor of find(previous)', E_USER_DEPRECATED);
+		return static::find('previous', $query);
+	}
+
+	public static function upcoming(array $query = []) {
+		trigger_error('::upcoming() is deprecated in favor of find(upcoming)', E_USER_DEPRECATED);
+		return static::find('upcoming', $query);
+	}
 }
+
 Events::init();
 
 ?>
