@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cms_event 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2015-06-16 14:42+0200\n"
-"PO-Revision-Date: 2015-06-16 14:48+0100\n"
+"POT-Creation-Date: 2016-04-13 10:02+0200\n"
+"PO-Revision-Date: 2016-04-13 10:04+0100\n"
 "Last-Translator: David Persson <davidpersson@gmx.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -18,99 +18,111 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 
-#: config/panes.php:19 config/widgets.php:22
+#: config/panes.php:26 config/widgets.php:29
 msgid "Events"
 msgstr "Veranstaltungen"
 
-#: models/Events.php:61 models/Events.php:68
+#: models/Events.php:71 models/Events.php:78
 msgid "This field cannot be left blank."
 msgstr "Dieses Feld darf nicht leer sein."
 
-#: models/Events.php:76
+#: models/Events.php:86
 msgid "Spaces cannot be used inside tags."
-msgstr ""
+msgstr "Innerhalb von Tags können keine Leerzeichen genutzt werden."
 
-#: views/events/admin_form.html.php:15
-msgid "untitled"
-msgstr "ohne Titel"
-
-#: views/events/admin_form.html.php:16
-msgid "event"
-msgstr "Veranstaltung"
-
-#: views/events/admin_form.html.php:19
+#: views/events/admin_form.html.php:12
 msgid "published"
 msgstr "publiziert"
 
-#: views/events/admin_form.html.php:19
+#: views/events/admin_form.html.php:12
 msgid "unpublished"
 msgstr "unpubliziert"
 
-#: views/events/admin_form.html.php:20 views/events/admin_form.html.php:87
+#: views/events/admin_form.html.php:16 views/events/admin_form.html.php:99
 msgid "sold out"
 msgstr "ausverkauft"
 
-#: views/events/admin_form.html.php:20
+#: views/events/admin_form.html.php:16
 msgid "tickets available"
 msgstr "Tickets verfügbar"
 
-#: views/events/admin_form.html.php:29
+#: views/events/admin_form.html.php:23
+msgid "untitled"
+msgstr "ohne Titel"
+
+#: views/events/admin_form.html.php:24 views/events/admin_index.html.php:30
+msgid "event"
+msgstr "Veranstaltung"
+
+#: views/events/admin_form.html.php:34
 msgid "Access"
 msgstr "Zugriffsrechte"
 
-#: views/events/admin_form.html.php:35 views/events/admin_index.html.php:46
+#: views/events/admin_form.html.php:40 views/events/admin_index.html.php:47
 msgid "Owner"
 msgstr "Eigentümer"
 
-#: views/events/admin_form.html.php:43 views/events/admin_index.html.php:40
+#: views/events/admin_form.html.php:48 views/events/admin_index.html.php:42
 msgid "Title"
 msgstr "Titel"
 
-#: views/events/admin_form.html.php:48 views/events/admin_index.html.php:41
+#: views/events/admin_form.html.php:53 views/events/admin_index.html.php:43
 msgid "Start"
 msgstr "Start"
 
-#: views/events/admin_form.html.php:53 views/events/admin_index.html.php:42
+#: views/events/admin_form.html.php:58 views/events/admin_index.html.php:44
 msgid "End"
 msgstr "Ende"
 
-#: views/events/admin_form.html.php:59 views/events/admin_index.html.php:43
+#: views/events/admin_form.html.php:64
 msgid "Location"
 msgstr "Ort"
 
-#: views/events/admin_form.html.php:66
-msgid "Cover"
-msgstr "Cover"
+#: views/events/admin_form.html.php:69
+msgid "Link"
+msgstr "Link"
 
-#: views/events/admin_form.html.php:76
-msgid "Ticketing"
-msgstr ""
-
-#: views/events/admin_form.html.php:82
-msgid "Ticket Link"
-msgstr ""
-
-#: views/events/admin_form.html.php:83
+#: views/events/admin_form.html.php:70 views/events/admin_form.html.php:95
 msgid "https://foo.com/bar or /bar"
 msgstr "https://foo.de/bar oder /bar"
 
-#: views/events/admin_form.html.php:98
+#: views/events/admin_form.html.php:72
+msgid "Provide an URL to i.e. the event details page."
+msgstr "Eine URL zu z.B. der Veranstaltungsdetailseite."
+
+#: views/events/admin_form.html.php:78
+msgid "Cover"
+msgstr "Cover"
+
+#: views/events/admin_form.html.php:88
+msgid "Ticketing"
+msgstr "Ticketing"
+
+#: views/events/admin_form.html.php:94
+msgid "Ticket Link"
+msgstr "Ticket Link"
+
+#: views/events/admin_form.html.php:110
 msgid "Teaser"
 msgstr "Anreißer"
 
-#: views/events/admin_form.html.php:108
+#: views/events/admin_form.html.php:120
 msgid "Content"
 msgstr "Inhalt"
 
-#: views/events/admin_form.html.php:116 views/events/admin_index.html.php:89
+#: views/events/admin_form.html.php:129
+msgid "delete"
+msgstr "löschen"
+
+#: views/events/admin_form.html.php:136 views/events/admin_index.html.php:90
 msgid "publish"
 msgstr "publizieren"
 
-#: views/events/admin_form.html.php:116 views/events/admin_index.html.php:89
+#: views/events/admin_form.html.php:136 views/events/admin_index.html.php:90
 msgid "unpublish"
 msgstr "depublizieren"
 
-#: views/events/admin_form.html.php:118
+#: views/events/admin_form.html.php:138
 msgid "save"
 msgstr "speichern"
 
@@ -118,34 +130,29 @@ msgstr "speichern"
 msgid "events"
 msgstr "Veranstaltungen"
 
-#: views/events/admin_index.html.php:30
-msgid "new event"
-msgstr "Neue Veranstaltung"
-
 #: views/events/admin_index.html.php:37
 msgid "publ.?"
 msgstr "publ.?"
 
-#: views/events/admin_index.html.php:38
+#: views/events/admin_index.html.php:39
 msgid "sold?"
-msgstr ""
+msgstr "ausverkauft?"
 
-#: views/events/admin_index.html.php:44
+#: views/events/admin_index.html.php:45
 msgid "Modified"
 msgstr "Bearbeitet"
 
-#: views/events/admin_index.html.php:52
+#: views/events/admin_index.html.php:53
 msgid "Filter"
 msgstr "Filter"
 
-#: views/events/admin_index.html.php:88
-msgid "delete"
-msgstr "löschen"
-
-#: views/events/admin_index.html.php:90
+#: views/events/admin_index.html.php:91
 msgid "open"
 msgstr "öffnen"
 
-#: views/events/admin_index.html.php:95
+#: views/events/admin_index.html.php:96
 msgid "No items available, yet."
 msgstr "Es sind noch keine Objekte verfügbar."
+
+#~ msgid "new event"
+#~ msgstr "Neue Veranstaltung"
