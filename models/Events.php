@@ -90,6 +90,15 @@ class Events extends \base_core\models\Base {
 			return empty($value) || preg_match('/^([a-z0-9]+)(\s?,\s?[a-z0-9]+)*$/i', $value);
 		});
 
+		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
+			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
+				'fields' => ['title', 'teaser', 'body'],
+				'locale' => PROJECT_LOCALE,
+				'locales' => explode(' ', PROJECT_LOCALES),
+				'strategy' => 'inline'
+			]);
+		}
+
 		// Start and end date are inclusive.
 		static::finder('current', function($self, $params, $chain) {
 			if (isset($params['options']['conditions']['or']) || isset($params['options']['conditions']['OR'])) {
