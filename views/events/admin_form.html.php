@@ -80,7 +80,13 @@ $this->set([
 					'value' => $item->cover()
 				]) ?>
 			</div>
-			<div class="grid-column-right"></div>
+			<div class="grid-column-right">
+				<?= $this->media->field('media', [
+					'label' => $t('Media'),
+					'attachment' => 'joined',
+					'value' => $item->media()
+				]) ?>
+			</div>
 		</div>
 
 		<?php if (Settings::read('event.useTicketing')): ?>

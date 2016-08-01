@@ -47,6 +47,14 @@ class Events extends \base_core\models\Base {
 				'cover' => [
 					'type' => 'direct',
 					'to' => 'cover_media_id'
+				],
+				'media' => [
+					'type' => 'joined',
+					'to' => 'base_media\models\MediaAttachments'
+				],
+				'bodyMedia' => [
+					'type' => 'inline',
+					'to' => 'body'
 				]
 			]
 		],
