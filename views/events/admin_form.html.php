@@ -70,6 +70,13 @@ $this->set([
 					'placeholder' => $t('https://foo.com/bar or /bar')]
 				) ?>
 				<div class="help"><?= $t('Provide an URL to i.e. the event details page.') ?></div>
+
+				<?= $this->form->field('tags', [
+					'value' => $item->tags(),
+					'label' => $t('Tags'),
+					'placeholder' => 'foo, bar',
+					'class' => 'input--tags'
+				]) ?>
 			</div>
 		</div>
 		<div class="grid-row">

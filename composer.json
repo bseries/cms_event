@@ -13,6 +13,7 @@
     "require": {
         "atelierdisko/base_core": "1.4.*",
         "atelierdisko/base_media": "1.4.*",
+        "atelierdisko/base_tag": "1.4.*",
         "atelierdisko/cms_core": "1.4.*",
         "atelierdisko/li3_flash_message": "1.0.*",
         "composer/installers": "1.*@stable",
@@ -24,6 +25,7 @@
     "repositories": [
       { "type": "vcs", "url": "git@code.atelierdisko.de:base_core.git" },
       { "type": "vcs", "url": "git@code.atelierdisko.de:base_media.git" },
+      { "type": "vcs", "url": "git@code.atelierdisko.de:base_tag.git" },
       { "type": "vcs", "url": "git@code.atelierdisko.de:cms_core.git" }
     ]
 }
