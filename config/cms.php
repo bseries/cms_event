@@ -26,5 +26,6 @@ Settings::register('service.artistData.default', [
 ]);
 
 Settings::register('event.enableTickets', false);
+Settings::register('event.enableTime', false);
 
 ?>

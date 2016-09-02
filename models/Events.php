@@ -78,6 +78,12 @@ class Events extends \base_core\models\Base {
 		if (!static::hasField('is_promoted')) {
 			trigger_error('Field is_promoted is missing, you may add it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
 		}
+		if (static::schema('start')['type'] !== 'datetime') {
+			trigger_error('Field start has not type datetime, you may change it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
+		}
+		if (static::schema('end')['type'] !== 'datetime') {
+			trigger_error('Field end has not type datetime, you may change it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
+		}
 		$model = static::_object();
 		extract(Message::aliases());
 

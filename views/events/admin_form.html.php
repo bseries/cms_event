@@ -64,16 +64,29 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?= $this->form->field('start', [
-					'type' => 'date',
-					'label' => $t('Start'),
-					'value' => $item->start ?: date('Y-m-d')
-				]) ?>
-				<?= $this->form->field('end', [
-					'type' => 'date',
-					'label' => $t('End'),
-					'value' => $item->end
-				]) ?>
+				<?php if (Settings::read('event.enableTime')): ?>
+					<?= $this->form->field('start', [
+						'type' => 'datetime-local',
+						'label' => $t('Start'),
+						'value' => $this->date->format($item->start ?: time(), 'datetime-local')
+					]) ?>
+					<?= $this->form->field('end', [
+						'type' => 'datetime-local',
+						'label' => $t('End'),
+						'value' => $this->date->format($item->end ?: time(), 'datetime-local')
+					]) ?>
+				<?php else: ?>
+					<?= $this->form->field('start', [
+						'type' => 'date',
+						'label' => $t('Start'),
+						'value' => $item->start ?: date('Y-m-d')
+					]) ?>
+					<?= $this->form->field('end', [
+						'type' => 'date',
+						'label' => $t('End'),
+						'value' => $item->end
+					]) ?>
+				<?php endif ?>
 
 				<?= $this->form->field('location', [
 					'type' => 'text',
