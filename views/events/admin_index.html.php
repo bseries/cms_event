@@ -35,6 +35,7 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="is-published" class="flag is-published table-sort"><?= $t('publ.?') ?>
+					<td data-sort="is-promoted" class="flag is-promoted table-sort"><?= $t('prom.?') ?>
 					<?php if (Settings::read('event.useTicketing')): ?>
 						<td data-sort="is-sold-out" class="flag is-sold-out table-sort"><?= $t('sold?') ?>
 					<?php endif ?>
@@ -59,6 +60,7 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr>
 					<td class="flag"><i class="material-icons"><?= ($item->is_published ? 'done' : '') ?></i>
+					<td class="flag"><i class="material-icons"><?= ($item->is_promoted ? 'done' : '') ?></i>
 					<?php if (Settings::read('event.useTicketing')): ?>
 						<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
 					<?php endif ?>
@@ -87,6 +89,7 @@ $this->set([
 							<?= $item->owner()->name ?>
 					<?php endif ?>
 					<td class="actions">
+						<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'cms_event'], ['class' => 'button']) ?>
 						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'cms_event'], ['class' => 'button']) ?>
 						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_event'], ['class' => 'button']) ?>
 				<?php endforeach ?>

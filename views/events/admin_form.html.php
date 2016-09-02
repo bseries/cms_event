@@ -10,6 +10,7 @@ $t = function($message, array $options = []) {
 
 $meta = [
 	'is_published' => $item->is_published ? $t('published') : $t('unpublished'),
+	'is_promoted' => $item->is_promoted ? $t('promoted') : $t('unpromoted'),
 ];
 
 if (Settings::read('event.useTicketing')) {
