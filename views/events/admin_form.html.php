@@ -46,7 +46,22 @@ $this->set([
 		<?php endif ?>
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('title', ['type' => 'text', 'label' => $t('Title'), 'class' => 'use-for-title']) ?>
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('title') as $locale => $value): ?>
+						<?= $this->form->field("i18n.title.{$locale}", [
+							'type' => 'text',
+							'label' => $t('Title') . ' (' . $this->g11n->name($locale) . ')',
+							'class' => $locale === PROJECT_LOCALE ? 'use-for-title' : null,
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->form->field('title', [
+						'type' => 'text',
+						'label' => $t('Title'),
+						'class' => 'use-for-title'
+					]) ?>
+				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
 				<?= $this->form->field('start', [
@@ -120,21 +135,43 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->editor->field('teaser', [
-					'label' => $t('Teaser'),
-					'size' => 'gamma',
-					'features' => 'minimal'
-				]) ?>
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('teaser') as $locale => $value): ?>
+						<?= $this->editor->field("i18n.teaser.{$locale}", [
+							'label' => $t('Teaser') . ' (' . $this->g11n->name($locale) . ')',
+							'size' => 'gamma',
+							'features' => 'minimal',
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->editor->field('teaser', [
+						'label' => $t('Teaser'),
+						'size' => 'gamma',
+						'features' => 'minimal'
+					]) ?>
+				<?php endif ?>
 			</div>
 			<div class="grid-column-right"></div>
 		</div>
 
 		<div class="grid-row">
-			<?= $this->editor->field('body', [
-				'label' => $t('Content'),
-				'size' => 'beta',
-				'features' => 'full'
-			]) ?>
+			<?php if ($isTranslated): ?>
+				<?php foreach ($item->translate('body') as $locale => $value): ?>
+					<?= $this->editor->field("i18n.body.{$locale}", [
+						'label' => $t('Content') . ' (' . $this->g11n->name($locale) . ')',
+						'size' => 'beta',
+						'features' => 'full',
+						'value' => $value
+					]) ?>
+				<?php endforeach ?>
+			<?php else: ?>
+				<?= $this->editor->field('body', [
+					'label' => $t('Content'),
+					'size' => 'beta',
+					'features' => 'full'
+				]) ?>
+			<?php endif ?>
 		</div>
 
 		<div class="bottom-actions">
