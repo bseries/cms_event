@@ -224,11 +224,11 @@ class Events extends \base_core\models\Base {
 	}
 
 	public function start($entity) {
-		return DateTime::createFromFormat('Y-m-d', $entity->start);
+		return DateTime::createFromFormat('Y-m-d H:i:s', $entity->start);
 	}
 
 	public function end($entity) {
-		return $entity->end ? DateTime::createFromFormat('Y-m-d', $entity->end) : null;
+		return $entity->end ? DateTime::createFromFormat('Y-m-d H:i:s', $entity->end) : null;
 	}
 
 	public function isPrevious($entity) {

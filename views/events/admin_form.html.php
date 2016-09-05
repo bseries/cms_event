@@ -68,13 +68,14 @@ $this->set([
 					<?= $this->form->field('start', [
 						'type' => 'datetime-local',
 						'label' => $t('Start'),
-						'value' => $this->date->format($item->start ?: time(), 'datetime-local')
+						'value' => $item->start ? $this->date->format($item->start(), 'w3c-noz') : date('Y-m-d\T00:00:00')
 					]) ?>
 					<?= $this->form->field('end', [
 						'type' => 'datetime-local',
 						'label' => $t('End'),
-						'value' => $this->date->format($item->end ?: time(), 'datetime-local')
+						'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : date('Y-m-d\T00:00:00')
 					]) ?>
+					<div class="help"><?= $t('Use 00:00 for time, when you want to leave it unspecified.') ?></div>
 				<?php else: ?>
 					<?= $this->form->field('start', [
 						'type' => 'date',
@@ -84,7 +85,7 @@ $this->set([
 					<?= $this->form->field('end', [
 						'type' => 'date',
 						'label' => $t('End'),
-						'value' => $item->end
+						'value' => $item->end ?: null
 					]) ?>
 				<?php endif ?>
 
