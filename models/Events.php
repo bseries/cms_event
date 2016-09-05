@@ -231,6 +231,20 @@ class Events extends \base_core\models\Base {
 		return $entity->end ? DateTime::createFromFormat('Y-m-d H:i:s', $entity->end) : null;
 	}
 
+	public function hasStartTime($entity) {
+		if (!$entity->start || !Settings::read('event.enableTime')) {
+			return false;
+		}
+		return preg_match('/00:00:00$/', $entity->start);
+	}
+
+	public function hasEndTime($entity) {
+		if (!$entity->end || !Settings::read('event.enableTime')) {
+			return false;
+		}
+		return preg_match('/00:00:00$/', $entity->end);
+	}
+
 	public function isPrevious($entity) {
 		$now = new DateTime();
 
