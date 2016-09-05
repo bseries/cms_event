@@ -73,7 +73,7 @@ $this->set([
 					<?= $this->form->field('end', [
 						'type' => 'datetime-local',
 						'label' => $t('End'),
-						'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : date('Y-m-d\T00:00:00')
+						'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : null
 					]) ?>
 					<div class="help"><?= $t('Use 00:00 for time, when you want to leave it unspecified.') ?></div>
 				<?php else: ?>
