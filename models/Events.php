@@ -235,14 +235,14 @@ class Events extends \base_core\models\Base {
 		if (!$entity->start || !Settings::read('event.enableTime')) {
 			return false;
 		}
-		return preg_match('/00:00:00$/', $entity->start);
+		return !preg_match('/00:00:00$/', $entity->start);
 	}
 
 	public function hasEndTime($entity) {
 		if (!$entity->end || !Settings::read('event.enableTime')) {
 			return false;
 		}
-		return preg_match('/00:00:00$/', $entity->end);
+		return !preg_match('/00:00:00$/', $entity->end);
 	}
 
 	public function isPrevious($entity) {
