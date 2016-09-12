@@ -132,7 +132,7 @@ class Events extends \base_core\models\Base {
 				// its active just on the current day.
 				[
 					'AND' => [
-						'start' => date('Y-m-d'),
+						'DATE(start)' => date('Y-m-d'),
 						'end' => null
 					]
 				],
