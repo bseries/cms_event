@@ -110,7 +110,7 @@ class Events extends \base_core\models\Base {
 			]
 		];
 		Validator::add('noSpacesInTags', function($value, $format, $options) {
-			return empty($value) || preg_match('/^([a-z0-9]+)(\s?,\s?[a-z0-9]+)*$/i', $value);
+			return empty($value) || preg_match('/^([^\s]+)(\s?,\s?[^\s]+)*$/i', $value);
 		});
 
 		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
