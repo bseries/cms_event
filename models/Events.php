@@ -19,7 +19,6 @@ namespace cms_event\models;
 
 use lithium\analysis\Logger;
 use lithium\core\Environment;
-use lithium\util\Validator;
 use lithium\util\Set;
 use DateTime;
 use lithium\g11n\Message;
@@ -106,12 +105,9 @@ class Events extends \base_core\models\Base {
 				'noSpacesInTags',
 				'on' => ['create', 'update'],
 				'required' => false,
-				'message' => $t('Spaces cannot be used inside tags.', ['scope' => 'cms_event'])
+				'message' => $t('Tags cannot contain spaces.', ['scope' => 'cms_event'])
 			]
 		];
-		Validator::add('noSpacesInTags', function($value, $format, $options) {
-			return empty($value) || preg_match('/^([^\s]+)(\s?,\s?[^\s]+)*$/i', $value);
-		});
 
 		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
 			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
