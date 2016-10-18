@@ -181,7 +181,9 @@ class Events extends \base_core\models\Base {
 	public static function poll() {
 		foreach (Settings::read('service.artistData') as $s) {
 			if ($s['stream']) {
-				static::_pollArtistData($s);
+				// FIXME Disabled as AD changed API endpoint, re-enable once
+				// we have refitted onto new API.
+				// static::_pollArtistData($s);
 			}
 		}
 	}
