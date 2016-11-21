@@ -15,7 +15,7 @@
         "atelierdisko/base_media": "1.4.*",
         "atelierdisko/base_tag": "1.4.*",
         "atelierdisko/cms_core": "1.4.*",
-        "atelierdisko/li3_flash_message": "1.0.*",
+        "atelierdisko/li3_flash_message": "1.*",
         "composer/installers": "1.*@stable",
         "davidpersson/li3_translate": "2.*",
         "guzzlehttp/guzzle": "6.*@stable",
