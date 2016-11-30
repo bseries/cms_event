@@ -152,7 +152,7 @@ msgstr "öffnen"
 
 #: views/events/admin_index.html.php:96
 msgid "No items available, yet."
-msgstr "Es sind noch keine Objekte verfügbar."
+msgstr "Es sind noch keine Einträge verfügbar."
 
 #~ msgid "new event"
 #~ msgstr "Neue Veranstaltung"
