@@ -21,7 +21,7 @@ use base_core\async\Jobs;
 use cms_event\models\Events;
 
 Jobs::recur('cms_event:stream', function() {
-	Events::poll();
+	return Events::poll();
 }, [
 	'frequency' => Jobs::FREQUENCY_MEDIUM
 ]);
