@@ -1,13 +1,13 @@
 {
     "name": "atelierdisko/cms_event",
     "description": "Event functionality for Bureau.",
-    "homepage": "http://atelierdisko.de",
+    "homepage": "https://atelierdisko.de",
     "type": "lithium-library",
     "license": "proprietary",
     "authors": [
       {
         "name": "Atelier Disko",
-        "homepage": "http://atelierdisko.de"
+        "homepage": "https://atelierdisko.de"
       }
     ],
     "require": {
