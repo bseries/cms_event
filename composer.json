@@ -24,9 +24,9 @@
         "unionofrad/lithium": "^1.1"
     },
     "repositories": [
-      { "type": "vcs", "url": "git@code.atelierdisko.de:base_core.git" },
-      { "type": "vcs", "url": "git@code.atelierdisko.de:base_media.git" },
-      { "type": "vcs", "url": "git@code.atelierdisko.de:base_tag.git" },
-      { "type": "vcs", "url": "git@code.atelierdisko.de:cms_core.git" }
+      { "type": "vcs", "url": "git@code.disko.io:base_core.git" },
+      { "type": "vcs", "url": "git@code.disko.io:base_media.git" },
+      { "type": "vcs", "url": "git@code.disko.io:base_tag.git" },
+      { "type": "vcs", "url": "git@code.disko.io:cms_core.git" }
     ]
 }

@@ -86,7 +86,7 @@ $this->set([
 						</time>
 					<?php if ($useOwner): ?>
 						<td class="user">
-							<?= $item->owner()->name ?>
+							<?= $this->user->link($item->owner()) ?>
 					<?php endif ?>
 					<td class="actions">
 						<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'cms_event'], ['class' => 'button']) ?>

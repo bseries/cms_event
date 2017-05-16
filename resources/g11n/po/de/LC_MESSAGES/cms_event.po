@@ -56,7 +56,7 @@ msgstr "Veranstaltung"
 
 #: views/events/admin_form.html.php:34
 msgid "Access"
-msgstr "Zugriffsrechte"
+msgstr "Zugriff"
 
 #: views/events/admin_form.html.php:40 views/events/admin_index.html.php:47
 msgid "Owner"
@@ -152,7 +152,7 @@ msgstr "öffnen"
 
 #: views/events/admin_index.html.php:96
 msgid "No items available, yet."
-msgstr "Es sind noch keine Objekte verfügbar."
+msgstr "Es sind noch keine Einträge verfügbar."
 
 #~ msgid "new event"
 #~ msgstr "Neue Veranstaltung"

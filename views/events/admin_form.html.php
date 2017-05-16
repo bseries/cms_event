@@ -80,12 +80,12 @@ $this->set([
 					<?= $this->form->field('start', [
 						'type' => 'date',
 						'label' => $t('Start'),
-						'value' => $item->start ?: date('Y-m-d')
+						'value' => $item->start ? $this->date->format($item->start(), 'yyyy-MM-dd') : date('Y-m-d')
 					]) ?>
 					<?= $this->form->field('end', [
 						'type' => 'date',
 						'label' => $t('End'),
-						'value' => $item->end ?: null
+						'value' => $item->end ? $this->date->format($item->endt(), 'yyyy-MM-dd') : null
 					]) ?>
 				<?php endif ?>
 
