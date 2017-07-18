@@ -38,6 +38,13 @@ class Events extends \base_core\models\Base {
 		]
 	];
 
+	public $hasMany = [
+		'Invites' => [
+			'to' => 'cms_rsvp\models\Invites',
+			'key' => 'event_id'
+		]
+	];
+
 	protected $_actsAs = [
 		'base_core\extensions\data\behavior\Ownable',
 		'base_core\extensions\data\behavior\Sluggable',
