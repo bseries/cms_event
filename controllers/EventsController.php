@@ -25,10 +25,8 @@ class EventsController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminDeleteTrait;
-
 	use \base_core\controllers\AdminPublishTrait;
 	use \base_core\controllers\AdminPromoteTrait;
-
 	use \base_core\controllers\DownloadTrait;
 
 	public function admin_export_ical() {
