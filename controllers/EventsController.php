@@ -17,6 +17,8 @@
 
 namespace cms_event\controllers;
 
+use cms_event\models\Events;
+
 class EventsController extends \base_core\controllers\BaseController {
 
 	use \base_core\controllers\AdminIndexTrait;
@@ -26,6 +28,27 @@ class EventsController extends \base_core\controllers\BaseController {
 
 	use \base_core\controllers\AdminPublishTrait;
 	use \base_core\controllers\AdminPromoteTrait;
+
+	use \base_core\controllers\DownloadTrait;
+
+	public function admin_export_ical() {
+		$item = Events::find('first', [
+			'conditions' => [
+				'id' => $this->request->id
+			]
+		]);
+		$stream = $item->exportAsICal();
+
+		$this->_renderDownload(
+			$this->_downloadBasename(
+				null,
+				'event',
+				$item->id . '.ics'
+			),
+			$stream
+		);
+		fclose($stream);
+	}
 }
 
 ?>

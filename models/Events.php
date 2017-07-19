@@ -17,13 +17,15 @@
 
 namespace cms_event\models;
 
-use lithium\analysis\Logger;
-use lithium\core\Environment;
-use lithium\util\Set;
 use DateTime;
-use lithium\g11n\Message;
+use Eluceo\iCal\Component\Calendar as iCalCalendar;
+use Eluceo\iCal\Component\Event as iCalEvent;
 use base_core\extensions\cms\Settings;
 use cms_event\models\ArtistDataShows;
+use lithium\analysis\Logger;
+use lithium\core\Environment;
+use lithium\g11n\Message;
+use lithium\util\Set;
 
 class Events extends \base_core\models\Base {
 
@@ -262,6 +264,35 @@ class Events extends \base_core\models\Base {
 
 	public function isUpcoming($entity) {
 		return $entity->start()->getTimestamp() - time() > 0;
+	}
+
+	public function exportAsICal($entity, $locale = null) {
+		$stream = fopen('php://temp', 'w+');
+
+		$calendar = new iCalCalendar(PROJECT_NAME);
+		$event = new iCalEvent();
+
+		$event->setDtStart($entity->start());
+
+		if (!$entity->hasStartTime() || !$entity->hasEndTime()) {
+			$event->setNoTime(true);
+		}
+		if ($entity->end) {
+			$event->setDtEnd($entity->end());
+		}
+		if (PROJECT_LOCALE !== PROJECT_LOCALES && $locale) {
+			$event->setSummary($entity->translate('title', $locale));
+		} else {
+			$event->setSummary($entity->title);
+		}
+		if ($entity->location) {
+			$event->setLocation($entity->location);
+		}
+		$calendar->addEvent($event);
+
+		fwrite($stream, $calendar->render());
+		rewind($stream);
+		return $stream;
 	}
 
 	/* Deprecated / BC */

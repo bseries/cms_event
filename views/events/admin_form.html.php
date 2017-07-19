@@ -198,7 +198,15 @@ $this->set([
 			</div>
 			<div class="bottom-actions__right">
 				<?php if ($item->exists()): ?>
-					<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish'], ['class' => 'button large']) ?>
+					<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), [
+						'id' => $item->id,
+						'action' => $item->is_published ? 'unpublish': 'publish'
+					], ['class' => 'button large']) ?>
+
+					<?= $this->html->link($t('iCAL'), [
+						'id' => $item->id,
+						'action' => 'export_ical'
+					], ['class' => 'button large']) ?>
 				<?php endif ?>
 				<?= $this->form->button($t('save'), [
 					'type' => 'submit',
