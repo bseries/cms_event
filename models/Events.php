@@ -266,7 +266,7 @@ class Events extends \base_core\models\Base {
 		return $entity->start()->getTimestamp() - time() > 0;
 	}
 
-	public function exportAsICal($entity, $locale = null) {
+	public function exportAsICal($entity) {
 		$stream = fopen('php://temp', 'w+');
 
 		$calendar = new iCalCalendar(PROJECT_NAME);
@@ -280,11 +280,8 @@ class Events extends \base_core\models\Base {
 		if ($entity->end) {
 			$event->setDtEnd($entity->end());
 		}
-		if (PROJECT_LOCALE !== PROJECT_LOCALES && $locale) {
-			$event->setSummary($entity->translate('title', $locale));
-		} else {
-			$event->setSummary($entity->title);
-		}
+		$event->setSummary($entity->title);
+
 		if ($entity->location) {
 			$event->setLocation($entity->location);
 		}
