@@ -28,7 +28,7 @@ $this->set([
 
 	<div class="top-actions">
 		<?= $this->html->link($t('event'), ['action' => 'add'], ['class' => 'button add']) ?>
-		<?= $this->_render('element', 'backlink', ['type' => 'multiple'] + compact('item'), [
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'], [
 			'library' => 'base_core'
 		]) ?>
 	</div>
