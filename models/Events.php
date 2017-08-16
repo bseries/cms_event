@@ -91,14 +91,14 @@ class Events extends \base_core\models\Base {
 			[
 				'notEmpty',
 				'on' => ['create', 'update'],
-				'message' => $t('This field cannot be left blank.', ['scope' => 'cms_event'])
+				'message' => $t('This field cannot be empty.', ['scope' => 'cms_event'])
 			]
 		];
 		$model->validates['start'] = [
 			[
 				'notEmpty',
 				'on' => ['create', 'update'],
-				'message' => $t('This field cannot be left blank.', ['scope' => 'cms_event'])
+				'message' => $t('This field cannot be empty.', ['scope' => 'cms_event'])
 			]
 		];
 		$model->validates['tags'] = [
