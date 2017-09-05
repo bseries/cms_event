@@ -29,6 +29,12 @@ $this->set([
 
 ?>
 <article>
+	<div class="top-actions">
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'] + compact('item'), [
+			'library' => 'base_core'
+		]) ?>
+	</div>
+
 	<?=$this->form->create($item) ?>
 		<?php if ($useOwner): ?>
 			<div class="grid-row">
@@ -198,7 +204,15 @@ $this->set([
 			</div>
 			<div class="bottom-actions__right">
 				<?php if ($item->exists()): ?>
-					<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish'], ['class' => 'button large']) ?>
+					<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), [
+						'id' => $item->id,
+						'action' => $item->is_published ? 'unpublish': 'publish'
+					], ['class' => 'button large']) ?>
+
+					<?= $this->html->link($t('iCAL'), [
+						'id' => $item->id,
+						'action' => 'export_ical'
+					], ['class' => 'button large']) ?>
 				<?php endif ?>
 				<?= $this->form->button($t('save'), [
 					'type' => 'submit',
