@@ -91,7 +91,7 @@ $this->set([
 					<?= $this->form->field('end', [
 						'type' => 'date',
 						'label' => $t('End'),
-						'value' => $item->end ? $this->date->format($item->endt(), 'yyyy-MM-dd') : null
+						'value' => $item->end ? $this->date->format($item->end(), 'yyyy-MM-dd') : null
 					]) ?>
 				<?php endif ?>
 
