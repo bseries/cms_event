@@ -1,5 +1,5 @@
 {
-    "name": "atelierdisko/cms_event",
+    "name": "bseries/cms_event",
     "description": "Event functionality for Bureau.",
     "homepage": "http://atelierdisko.de",
     "type": "lithium-library",
@@ -11,10 +11,10 @@
       }
     ],
     "require": {
-        "atelierdisko/base_core": "1.4.*",
-        "atelierdisko/base_media": "1.4.*",
-        "atelierdisko/base_tag": "1.4.*",
-        "atelierdisko/cms_core": "1.4.*",
+        "bseries/base_core": "1.4.*",
+        "bseries/base_media": "1.4.*",
+        "bseries/base_tag": "1.4.*",
+        "bseries/cms_core": "1.4.*",
         "atelierdisko/li3_flash_message": "1.0.*",
         "composer/installers": "1.*@stable",
         "davidpersson/li3_translate": "2.*",
