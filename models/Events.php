@@ -252,7 +252,7 @@ class Events extends \base_core\models\Base {
 		}
 		return DateTime::createFromFormat(
 			'Y-m-d H:i:s',
-			$entity->start,
+			$entity->end,
 			// FIXME: Currently assumes datetime is stored in project's default timezone.
 			//        Once datetimes are normalised and stored in UTC. Remove this so the
 			//        class always uses UTC.
