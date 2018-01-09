@@ -296,7 +296,7 @@ class Events extends \base_core\models\Base {
 		// Time is only used when both start and end time are given or
 		// only start is used an has time.
 		$useTime = $entity->hasStartTime() && $entity->hasEndTime();
-		$useTime = $useTime || (!$entiy->end && $entity->hasStartTime());
+		$useTime = $useTime || (!$entity->end && $entity->hasStartTime());
 		if (!$useTime) {
 			$event->setNoTime(true);
 		}
