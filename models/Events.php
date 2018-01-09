@@ -18,6 +18,7 @@
 namespace cms_event\models;
 
 use DateTime;
+use DateTimeZone;
 use Eluceo\iCal\Component\Calendar as iCalCalendar;
 use Eluceo\iCal\Component\Event as iCalEvent;
 use base_core\extensions\cms\Settings;
@@ -232,11 +233,31 @@ class Events extends \base_core\models\Base {
 	}
 
 	public function start($entity) {
-		return DateTime::createFromFormat('Y-m-d H:i:s', $entity->start);
+		// start is always required, and is assumed to be always present.
+
+		return DateTime::createFromFormat(
+			'Y-m-d H:i:s',
+			$entity->start,
+			// FIXME: Currently assumes datetime is stored in project's default timezone.
+			//        Once datetimes are normalised and stored in UTC. Remove this so the
+			//        class always uses UTC.
+			new DateTimeZone(PROJECT_TIMEZONE)
+		);
 	}
 
 	public function end($entity) {
-		return $entity->end ? DateTime::createFromFormat('Y-m-d H:i:s', $entity->end) : null;
+		// end is optional.
+		if (!$entity->end) {
+			return null;
+		}
+		return DateTime::createFromFormat(
+			'Y-m-d H:i:s',
+			$entity->start,
+			// FIXME: Currently assumes datetime is stored in project's default timezone.
+			//        Once datetimes are normalised and stored in UTC. Remove this so the
+			//        class always uses UTC.
+			new DateTimeZone(PROJECT_TIMEZONE)
+		);
 	}
 
 	public function hasStartTime($entity) {
@@ -272,14 +293,20 @@ class Events extends \base_core\models\Base {
 		$calendar = new iCalCalendar(PROJECT_NAME);
 		$event = new iCalEvent();
 
-		$event->setDtStart($entity->start());
-
-		if (!$entity->hasStartTime() || !$entity->hasEndTime()) {
+		// Time is only used when both start and end time are given or
+		// only start is used an has time.
+		$useTime = $entity->hasStartTime() && $entity->hasEndTime();
+		$useTime = $useTime || (!$entiy->end && $entity->hasStartTime());
+		if (!$useTime) {
 			$event->setNoTime(true);
 		}
+
+		$event->setDtStart($entity->start());
+
 		if ($entity->end) {
 			$event->setDtEnd($entity->end());
 		}
+
 		$event->setSummary($entity->title);
 
 		if ($entity->location) {
