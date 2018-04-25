@@ -13,7 +13,6 @@ use DateTime;
 use Eluceo\iCal\Component\Calendar as iCalCalendar;
 use Eluceo\iCal\Component\Event as iCalEvent;
 use base_core\extensions\cms\Settings;
-use cms_event\models\ArtistDataShows;
 use lithium\analysis\Logger;
 use lithium\core\Environment;
 use lithium\g11n\Message;
@@ -178,44 +177,6 @@ class Events extends \base_core\models\Base {
 			];
 			return $chain->next($self, $params, $chain);
 		});
-	}
-
-	public static function poll() {
-		foreach (Settings::read('service.artistData') as $s) {
-			if ($s['stream']) {
-				// FIXME Disabled as AD changed API endpoint, re-enable once
-				// we have refitted onto new API.
-				// static::_pollArtistData($s);
-			}
-		}
-	}
-
-	protected static function _pollArtistData($config) {
-		$results = ArtistDataShows::all($config);
-
-		if (!$results) {
-			return $results;
-		}
-		foreach ($results as $result) {
-			$item = Events::find('first', [
-				'conditions' => [
-					'title' => $result->title,
-					'location' => $result->location,
-					'start' => $result->start,
-					'end' => $result->end
-				]
-			]);
-			if (!$item) {
-				$item = Events::create([
-					// Moved here as when autopublish is enabled it would otherwise
-					// force manually unpublised items to become published again.
-					'is_published' => $config['autopublish']
-				]);
-			}
-			if (!$item->save($result->data())) {
-				Logger::notice('Failed to save artist data event: '. var_export($item->data(), true));
-			}
-		}
 	}
 
 	// Canonical sort date.

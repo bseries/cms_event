@@ -11,12 +11,6 @@ namespace cms_event\config;
 
 use base_core\extensions\cms\Settings;
 
-Settings::register('service.artistData.default', [
-	'stream' => false,
-	'autopublish' => false,
-	'username' => null
-]);
-
 Settings::register('event.enableTickets', false);
 Settings::register('event.enableTime', false);
 
