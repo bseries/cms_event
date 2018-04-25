@@ -2,7 +2,7 @@
     "name": "bseries/cms_event",
     "description": "Event functionality for Bureau.",
     "type": "lithium-library",
-    "license": "proprietary",
+    "license": ["BSD-3-Clause"],
     "require": {
         "atelierdisko/li3_flash_message": "1.*",
         "atelierdisko/li3_taggable": "^1.4@stable || 1.5.*@dev",
