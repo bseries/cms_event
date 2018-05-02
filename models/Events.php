@@ -84,7 +84,7 @@ class Events extends \base_core\models\Base {
 		if (static::schema('end')['type'] !== 'datetime') {
 			trigger_error('Field end has not type datetime, you may change it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
 		}
-		$model = static::_object();
+		$model = static::object();
 		extract(Message::aliases());
 
 		$model->validates['title'] = [
