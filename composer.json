@@ -14,6 +14,6 @@
         "davidpersson/li3_translate": "^2.1@dev",
         "eluceo/ical": "0.11.* || 0.12.*",
         "php": "^5.5 || ^7.0",
-        "unionofrad/lithium": "^1.1"
+        "unionofrad/lithium": "^1.2"
     }
 }
