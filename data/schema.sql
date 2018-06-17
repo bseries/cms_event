@@ -19,4 +19,4 @@ CREATE TABLE `events` (
   PRIMARY KEY (`id`),
   KEY `is_published` (`is_published`),
   KEY `start` (`start`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
