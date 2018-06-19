@@ -70,30 +70,17 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?php if (Settings::read('event.enableTime')): ?>
-					<?= $this->form->field('start', [
-						'type' => 'datetime-local',
-						'label' => $t('Start'),
-						'value' => $item->start ? $this->date->format($item->start(), 'w3c-noz') : date('Y-m-d\T00:00:00')
-					]) ?>
-					<?= $this->form->field('end', [
-						'type' => 'datetime-local',
-						'label' => $t('End'),
-						'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : null
-					]) ?>
-					<div class="help"><?= $t('Use 00:00 for time, when you want to leave it unspecified.') ?></div>
-				<?php else: ?>
-					<?= $this->form->field('start', [
-						'type' => 'date',
-						'label' => $t('Start'),
-						'value' => $item->start ? $this->date->format($item->start(), 'yyyy-MM-dd') : date('Y-m-d')
-					]) ?>
-					<?= $this->form->field('end', [
-						'type' => 'date',
-						'label' => $t('End'),
-						'value' => $item->end ? $this->date->format($item->end(), 'yyyy-MM-dd') : null
-					]) ?>
-				<?php endif ?>
+				<?= $this->form->field('start', [
+					'type' => 'datetime-local',
+					'label' => $t('Start'),
+					'value' => $item->start ? $this->date->format($item->start(), 'w3c-noz') : date('Y-m-d\T00:00:00')
+				]) ?>
+				<?= $this->form->field('end', [
+					'type' => 'datetime-local',
+					'label' => $t('End'),
+					'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : null
+				]) ?>
+				<div class="help"><?= $t('Use 00:00 for time, when you want to leave it unspecified.') ?></div>
 
 				<?= $this->form->field('location', [
 					'type' => 'text',

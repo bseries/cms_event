@@ -12,7 +12,6 @@ namespace cms_event\models;
 use DateTime;
 use Eluceo\iCal\Component\Calendar as iCalCalendar;
 use Eluceo\iCal\Component\Event as iCalEvent;
-use base_core\extensions\cms\Settings;
 use lithium\analysis\Logger;
 use lithium\core\Environment;
 use lithium\g11n\Message;
@@ -193,14 +192,14 @@ class Events extends \base_core\models\Base {
 	}
 
 	public function hasStartTime($entity) {
-		if (!$entity->start || !Settings::read('event.enableTime')) {
+		if (!$entity->start) {
 			return false;
 		}
 		return !preg_match('/00:00:00$/', $entity->start);
 	}
 
 	public function hasEndTime($entity) {
-		if (!$entity->end || !Settings::read('event.enableTime')) {
+		if (!$entity->end) {
 			return false;
 		}
 		return !preg_match('/00:00:00$/', $entity->end);
