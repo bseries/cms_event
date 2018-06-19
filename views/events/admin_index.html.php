@@ -76,12 +76,12 @@ $this->set([
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td class="date start">
-						<time datetime="<?= $this->date->format($item->start, 'w3c') ?>">
-							<?= $this->date->format($item->start, 'date') ?>
+						<time datetime="<?= $this->date->format($item->start(), 'w3c') ?>">
+							<?= $this->date->format($item->start(), 'date') ?>
 						</time>
 					<td class="date end">
-						<time datetime="<?= $this->date->format($item->end, 'w3c') ?>">
-							<?= $this->date->format($item->end, 'date') ?>
+						<time datetime="<?= $this->date->format($item->end(), 'w3c') ?>">
+							<?= $this->date->format($item->end(), 'date') ?>
 						</time>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">

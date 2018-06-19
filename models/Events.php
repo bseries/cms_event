@@ -10,6 +10,7 @@
 namespace cms_event\models;
 
 use DateTime;
+use DateTimeZone;
 use Eluceo\iCal\Component\Calendar as iCalCalendar;
 use Eluceo\iCal\Component\Event as iCalEvent;
 use lithium\analysis\Logger;
@@ -77,12 +78,6 @@ class Events extends \base_core\models\Base {
 		if (!static::hasField('is_promoted')) {
 			trigger_error('Field is_promoted is missing, you may add it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
 		}
-		if (static::schema('start')['type'] !== 'datetime') {
-			trigger_error('Field start has not type datetime, you may change it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
-		}
-		if (static::schema('end')['type'] !== 'datetime') {
-			trigger_error('Field end has not type datetime, you may change it now (or not), it becomes required in 1.5.', E_USER_NOTICE);
-		}
 		$model = static::object();
 		extract(Message::aliases());
 
@@ -93,7 +88,7 @@ class Events extends \base_core\models\Base {
 				'message' => $t('This field cannot be empty.', ['scope' => 'cms_event'])
 			]
 		];
-		$model->validates['start'] = [
+		$model->validates['start_date'] = [
 			[
 				'notEmpty',
 				'on' => ['create', 'update'],
@@ -178,44 +173,60 @@ class Events extends \base_core\models\Base {
 		});
 	}
 
-	// Canonical sort date.
-	public function date($entity) {
-		return $this->start($entity);
-	}
-
+	// Returns the start date (and when available time. The start date is required.
 	public function start($entity) {
-		return DateTime::createFromFormat('Y-m-d H:i:s', $entity->start);
+		$date = DateTime::createFromFormat(
+			'Y-m-d',
+			$entity->start_date,
+			new DateTimeZone($entity->timezone)
+		);
+
+		if ($entity->start_time) {
+			$time = explode(':', $entity->start_time);
+			$date->setTime($time[0], $time[1], $time[2]);
+		}
+		return $date;
 	}
 
+	// Returns the end date (and when available time). The end date is optional.
 	public function end($entity) {
-		return $entity->end ? DateTime::createFromFormat('Y-m-d H:i:s', $entity->end) : null;
+		if (!$entity->end_date) {
+			return null;
+		}
+		$date = DateTime::createFromFormat(
+			'Y-m-d',
+			$entity->end_date,
+			new DateTimeZone($entity->timezone)
+		);
+
+		if ($entity->end_time) {
+			$time = explode(':', $entity->end_time);
+			$date->setTime($time[0], $time[1], $time[2]);
+		}
+		return $date;
 	}
 
 	public function hasStartTime($entity) {
-		if (!$entity->start) {
-			return false;
-		}
-		return !preg_match('/00:00:00$/', $entity->start);
+		return (boolean) $entity->start_time;
 	}
 
 	public function hasEndTime($entity) {
-		if (!$entity->end) {
-			return false;
-		}
-		return !preg_match('/00:00:00$/', $entity->end);
+		return (boolean) $entity->end_time;
 	}
 
 	public function isPrevious($entity) {
 		$now = new DateTime();
 
-		if ($entity->end) {
-			return $now->diff($entity->start())->days < 0;
+		if ($end = $entity->end()) {
+			return $now->diff($end)->days < 0;
 		}
 		return $now->diff($entity->start())->days < 0;
 	}
 
 	public function isUpcoming($entity) {
-		return $entity->start()->getTimestamp() - time() > 0;
+		$now = new DateTime();
+
+		return $entity->start() < $now;
 	}
 
 	public function exportAsICal($entity) {
@@ -229,8 +240,8 @@ class Events extends \base_core\models\Base {
 		if (!$entity->hasStartTime() || !$entity->hasEndTime()) {
 			$event->setNoTime(true);
 		}
-		if ($entity->end) {
-			$event->setDtEnd($entity->end());
+		if ($end = $entity->end()) {
+			$event->setDtEnd($end);
 		}
 		$event->setSummary($entity->title);
 
@@ -245,6 +256,12 @@ class Events extends \base_core\models\Base {
 	}
 
 	/* Deprecated / BC */
+
+	// Canonical sort date.
+	public function date($entity) {
+		trigger_error('date() is deprecated in favor of start()', E_USER_DEPRECATED);
+		return $this->start($entity);
+	}
 
 	public static function current(array $query = []) {
 		trigger_error('::current() is deprecated in favor of find(current)', E_USER_DEPRECATED);

@@ -24,6 +24,7 @@
 
 namespace cms_event\controllers;
 
+use base_core\models\Timezones;
 use cms_event\models\Events;
 
 class EventsController extends \base_core\controllers\BaseController {
@@ -53,6 +54,13 @@ class EventsController extends \base_core\controllers\BaseController {
 			$stream
 		);
 		fclose($stream);
+	}
+
+	protected function _selects($item = null) {
+		if ($item) {
+			$timezones = Timezones::find('list');
+		}
+		return compact('timezones');
 	}
 }
 

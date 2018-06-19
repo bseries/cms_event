@@ -70,17 +70,6 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?= $this->form->field('start', [
-					'type' => 'datetime-local',
-					'label' => $t('Start'),
-					'value' => $item->start ? $this->date->format($item->start(), 'w3c-noz') : date('Y-m-d\T00:00:00')
-				]) ?>
-				<?= $this->form->field('end', [
-					'type' => 'datetime-local',
-					'label' => $t('End'),
-					'value' => $item->end ? $this->date->format($item->end(), 'w3c-noz') : null
-				]) ?>
-				<div class="help"><?= $t('Use 00:00 for time, when you want to leave it unspecified.') ?></div>
 
 				<?= $this->form->field('location', [
 					'type' => 'text',
@@ -100,6 +89,41 @@ $this->set([
 					'placeholder' => 'foo, bar',
 					'class' => 'input--tags'
 				]) ?>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?= $this->form->field('start_date', [
+					'type' => 'date',
+					'label' => $t('Start date'),
+					'value' => $item->start_date ?: date('Y-m-d')
+				]) ?>
+				<?= $this->form->field('start_time', [
+					'type' => 'time',
+					'label' => $t('Start time'),
+					'value' => $item->start_time
+				]) ?>
+				<div class="help"><?= $t('The time is optional, you can leave it out if you like to.') ?></div>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('end_date', [
+					'type' => 'date',
+					'label' => $t('End date'),
+					'value' => $item->end_date
+				]) ?>
+				<?= $this->form->field('end_time', [
+					'type' => 'time',
+					'label' => $t('End time'),
+					'value' => $item->end_time
+				]) ?>
+				<div class="help"><?= $t('The time is optional, you can leave it out if you like to.') ?></div>
+				<?= $this->form->field('timezone', [
+					'type' => 'select',
+					'label' => $t('Timezone'),
+					'list' => $timezones,
+					'value' => $authedUser->timezone
+				]) ?>
+				<div class="help"><?= $t('Timezone in which the event is taking place.') ?></div>
 			</div>
 		</div>
 		<div class="grid-row">
