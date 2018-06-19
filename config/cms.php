@@ -11,6 +11,6 @@ namespace cms_event\config;
 
 use base_core\extensions\cms\Settings;
 
-Settings::register('event.enableTickets', false);
+Settings::register('event.useTicketing', false);
 
 ?>
