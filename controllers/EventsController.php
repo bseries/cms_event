@@ -43,15 +43,10 @@ class EventsController extends \base_core\controllers\BaseController {
 				'id' => $this->request->id
 			]
 		]);
-		$stream = $item->exportAsICal();
-
 		$this->_renderDownload(
-			$this->_downloadBasename(
-				null,
-				'event',
-				$item->id . '.ics'
-			),
-			$stream
+			$stream = $item->exportAsICal(),
+			'text/calendar',
+			'UTF-8'
 		);
 		fclose($stream);
 	}

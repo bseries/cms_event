@@ -223,7 +223,7 @@ $this->set([
 					<?= $this->html->link($t('iCAL'), [
 						'id' => $item->id,
 						'action' => 'export_ical'
-					], ['class' => 'button large']) ?>
+					], ['class' => 'button large', 'download' => "event_{$item->id}.ics"]) ?>
 				<?php endif ?>
 				<?= $this->form->button($t('save'), [
 					'type' => 'submit',
