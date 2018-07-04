@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cms_event 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2016-04-13 10:02+0200\n"
+"POT-Creation-Date: 2018-07-04 13:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: config/panes.php:26 config/widgets.php:29
+#: config/panes.php:18 config/widgets.php:21
 msgid "Events"
 msgstr ""
 
-#: models/Events.php:71 models/Events.php:78
-msgid "This field cannot be left blank."
+#: models/Events.php:88 models/Events.php:95
+msgid "This field cannot be empty."
 msgstr ""
 
-#: models/Events.php:86
-msgid "Spaces cannot be used inside tags."
+#: models/Events.php:103
+msgid "Tags cannot contain spaces."
 msgstr ""
 
 #: views/events/admin_form.html.php:12
@@ -37,91 +37,132 @@ msgstr ""
 msgid "unpublished"
 msgstr ""
 
-#: views/events/admin_form.html.php:16 views/events/admin_form.html.php:99
+#: views/events/admin_form.html.php:13
+msgid "promoted"
+msgstr ""
+
+#: views/events/admin_form.html.php:13
+msgid "unpromoted"
+msgstr ""
+
+#: views/events/admin_form.html.php:17 views/events/admin_form.html.php:159
 msgid "sold out"
 msgstr ""
 
-#: views/events/admin_form.html.php:16
+#: views/events/admin_form.html.php:17
 msgid "tickets available"
 msgstr ""
 
-#: views/events/admin_form.html.php:23
+#: views/events/admin_form.html.php:24
 msgid "untitled"
 msgstr ""
 
-#: views/events/admin_form.html.php:24 views/events/admin_index.html.php:30
+#: views/events/admin_form.html.php:25 views/events/admin_index.html.php:30
 msgid "event"
 msgstr ""
 
-#: views/events/admin_form.html.php:34
+#: views/events/admin_form.html.php:41
 msgid "Access"
 msgstr ""
 
-#: views/events/admin_form.html.php:40 views/events/admin_index.html.php:47
+#: views/events/admin_form.html.php:47 views/events/admin_index.html.php:51
 msgid "Owner"
 msgstr ""
 
-#: views/events/admin_form.html.php:48 views/events/admin_index.html.php:42
+#: views/events/admin_form.html.php:59 views/events/admin_form.html.php:67
+#: views/events/admin_index.html.php:46
 msgid "Title"
 msgstr ""
 
-#: views/events/admin_form.html.php:53 views/events/admin_index.html.php:43
-msgid "Start"
-msgstr ""
-
-#: views/events/admin_form.html.php:58 views/events/admin_index.html.php:44
-msgid "End"
-msgstr ""
-
-#: views/events/admin_form.html.php:64
+#: views/events/admin_form.html.php:76
 msgid "Location"
 msgstr ""
 
-#: views/events/admin_form.html.php:69
+#: views/events/admin_form.html.php:81
 msgid "Link"
 msgstr ""
 
-#: views/events/admin_form.html.php:70 views/events/admin_form.html.php:95
+#: views/events/admin_form.html.php:82 views/events/admin_form.html.php:155
 msgid "https://foo.com/bar or /bar"
 msgstr ""
 
-#: views/events/admin_form.html.php:72
+#: views/events/admin_form.html.php:84
 msgid "Provide an URL to i.e. the event details page."
 msgstr ""
 
-#: views/events/admin_form.html.php:78
+#: views/events/admin_form.html.php:88
+msgid "Tags"
+msgstr ""
+
+#: views/events/admin_form.html.php:98
+msgid "Start date"
+msgstr ""
+
+#: views/events/admin_form.html.php:103
+msgid "Start time"
+msgstr ""
+
+#: views/events/admin_form.html.php:106 views/events/admin_form.html.php:119
+msgid "The time is optional, you can leave it out if you like to."
+msgstr ""
+
+#: views/events/admin_form.html.php:111
+msgid "End date"
+msgstr ""
+
+#: views/events/admin_form.html.php:116
+msgid "End time"
+msgstr ""
+
+#: views/events/admin_form.html.php:122
+msgid "Timezone"
+msgstr ""
+
+#: views/events/admin_form.html.php:126
+msgid "Timezone in which the event is taking place."
+msgstr ""
+
+#: views/events/admin_form.html.php:132
 msgid "Cover"
 msgstr ""
 
-#: views/events/admin_form.html.php:88
+#: views/events/admin_form.html.php:139
+msgid "Media"
+msgstr ""
+
+#: views/events/admin_form.html.php:148
 msgid "Ticketing"
 msgstr ""
 
-#: views/events/admin_form.html.php:94
+#: views/events/admin_form.html.php:154
 msgid "Ticket Link"
 msgstr ""
 
-#: views/events/admin_form.html.php:110
+#: views/events/admin_form.html.php:172 views/events/admin_form.html.php:180
 msgid "Teaser"
 msgstr ""
 
-#: views/events/admin_form.html.php:120
+#: views/events/admin_form.html.php:193 views/events/admin_form.html.php:201
 msgid "Content"
 msgstr ""
 
-#: views/events/admin_form.html.php:129
+#: views/events/admin_form.html.php:211
 msgid "delete"
 msgstr ""
 
-#: views/events/admin_form.html.php:136 views/events/admin_index.html.php:90
+#: views/events/admin_form.html.php:218 views/events/admin_index.html.php:96
 msgid "publish"
 msgstr ""
 
-#: views/events/admin_form.html.php:136 views/events/admin_index.html.php:90
+#: views/events/admin_form.html.php:218 views/events/admin_index.html.php:96
 msgid "unpublish"
 msgstr ""
 
-#: views/events/admin_form.html.php:138
+#: views/events/admin_form.html.php:223
+msgid "iCAL"
+msgstr ""
+
+#: views/events/admin_form.html.php:228
 msgid "save"
 msgstr ""
 
@@ -129,26 +170,46 @@ msgstr ""
 msgid "events"
 msgstr ""
 
-#: views/events/admin_index.html.php:37
+#: views/events/admin_index.html.php:40
 msgid "publ.?"
 msgstr ""
 
-#: views/events/admin_index.html.php:39
+#: views/events/admin_index.html.php:41
+msgid "prom.?"
+msgstr ""
+
+#: views/events/admin_index.html.php:43
 msgid "sold?"
 msgstr ""
 
-#: views/events/admin_index.html.php:45
+#: views/events/admin_index.html.php:47
+msgid "Start"
+msgstr ""
+
+#: views/events/admin_index.html.php:48
+msgid "End"
+msgstr ""
+
+#: views/events/admin_index.html.php:49
 msgid "Modified"
 msgstr ""
 
-#: views/events/admin_index.html.php:53
+#: views/events/admin_index.html.php:57
 msgid "Filter"
 msgstr ""
 
-#: views/events/admin_index.html.php:91
+#: views/events/admin_index.html.php:95
+msgid "promote"
+msgstr ""
+
+#: views/events/admin_index.html.php:95
+msgid "unpromote"
+msgstr ""
+
+#: views/events/admin_index.html.php:97
 msgid "open"
 msgstr ""
 
-#: views/events/admin_index.html.php:96
+#: views/events/admin_index.html.php:102
 msgid "No items available, yet."
 msgstr ""
