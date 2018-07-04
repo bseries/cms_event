@@ -235,14 +235,20 @@ class Events extends \base_core\models\Base {
 		$calendar = new iCalCalendar(PROJECT_NAME);
 		$event = new iCalEvent();
 
-		$event->setDtStart($entity->start());
-
-		if (!$entity->hasStartTime() || !$entity->hasEndTime()) {
+		// Time is only used when both start and end time are given or
+		// only start is used and has time.
+		$useTime = $entity->hasStartTime() && $entity->hasEndTime();
+		$useTime = $useTime || (!$entity->end && $entity->hasStartTime());
+		if (!$useTime) {
 			$event->setNoTime(true);
 		}
+		$event->setUseTimezone(true);
+
 		if ($end = $entity->end()) {
 			$event->setDtEnd($end);
 		}
+		$event->setDtStart($entity->start());
+
 		$event->setSummary($entity->title);
 
 		if ($entity->location) {
