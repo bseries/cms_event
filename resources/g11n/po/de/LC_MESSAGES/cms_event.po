@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cms_event 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2018-07-04 13:51+0200\n"
-"PO-Revision-Date: 2018-07-04 13:53+0200\n"
+"POT-Creation-Date: 2018-07-12 12:51+0200\n"
+"PO-Revision-Date: 2018-07-12 12:59+0200\n"
 "Last-Translator: David Persson <davidpersson@gmx.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -105,7 +105,9 @@ msgstr "Startzeit"
 
 #: views/events/admin_form.html.php:106 views/events/admin_form.html.php:119
 msgid "The time is optional, you can leave it out if you like to."
-msgstr "Die Angabe der Zeit ist optional, du kannst sie auslassen, wenn keine Zeit benötigt wird."
+msgstr ""
+"Die Angabe der Zeit ist optional, du kannst sie auslassen, wenn keine Zeit "
+"benötigt wird."
 
 #: views/events/admin_form.html.php:111
 msgid "End date"
@@ -117,11 +119,11 @@ msgstr "Endzeit"
 
 #: views/events/admin_form.html.php:122
 msgid "Timezone"
-msgstr ""
+msgstr "Zeitzone"
 
 #: views/events/admin_form.html.php:126
 msgid "Timezone in which the event is taking place."
-msgstr ""
+msgstr "Zeitzone der Veranstaltung"
 
 #: views/events/admin_form.html.php:132
 msgid "Cover"
@@ -129,7 +131,7 @@ msgstr "Cover"
 
 #: views/events/admin_form.html.php:139
 msgid "Media"
-msgstr ""
+msgstr "Medien"
 
 #: views/events/admin_form.html.php:148
 msgid "Ticketing"
