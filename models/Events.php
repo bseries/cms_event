@@ -242,7 +242,8 @@ class Events extends \base_core\models\Base {
 		if (!$useTime) {
 			$event->setNoTime(true);
 		}
-		$event->setUseTimezone(true);
+		// Can't use useTimezone(true), this relies on TZ features not present
+		// in iCalender.
 
 		if ($end = $entity->end()) {
 			$event->setDtEnd($end);
