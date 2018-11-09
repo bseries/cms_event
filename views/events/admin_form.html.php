@@ -121,7 +121,7 @@ $this->set([
 					'type' => 'select',
 					'label' => $t('Timezone'),
 					'list' => $timezones,
-					'value' => $authedUser->timezone
+					'value' => $item->timezone ?: $authedUser->timezone
 				]) ?>
 				<div class="help"><?= $t('Timezone in which the event is taking place.') ?></div>
 			</div>
