@@ -50,6 +50,9 @@ $this->set([
 					<?php if ($useOwner): ?>
 						<td class="user"><?= $t('Owner') ?>
 					<?php endif ?>
+					<?php if ($useSites): ?>
+						<td data-sort="site" class="table-sort"><?= $t('Site') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -90,6 +93,10 @@ $this->set([
 					<?php if ($useOwner): ?>
 						<td class="user">
 							<?= $this->user->link($item->owner()) ?>
+					<?php endif ?>
+					<?php if ($useSites): ?>
+						<td>
+							<?= $item->site ?: '-' ?>
 					<?php endif ?>
 					<td class="actions">
 						<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'cms_event'], ['class' => 'button']) ?>
