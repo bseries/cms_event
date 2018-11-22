@@ -13,6 +13,8 @@ use DateTime;
 use DateTimeZone;
 use Eluceo\iCal\Component\Calendar as iCalCalendar;
 use Eluceo\iCal\Component\Event as iCalEvent;
+use base_core\extensions\cms\Settings;
+use cms_event\models\BandsintownEvents;
 use lithium\analysis\Logger;
 use lithium\core\Environment;
 use lithium\g11n\Message;
@@ -178,7 +180,7 @@ class Events extends \base_core\models\Base {
 		$date = DateTime::createFromFormat(
 			'Y-m-d',
 			$entity->start_date,
-			new DateTimeZone($entity->timezone)
+			new DateTimeZone($entity->timezone ?: PROJECT_TIMEZONE)
 		);
 
 		if ($entity->start_time) {
@@ -196,7 +198,7 @@ class Events extends \base_core\models\Base {
 		$date = DateTime::createFromFormat(
 			'Y-m-d',
 			$entity->end_date,
-			new DateTimeZone($entity->timezone)
+			new DateTimeZone($entity->timezone ?: PROJECT_TIMEZONE)
 		);
 
 		if ($entity->end_time) {
@@ -260,6 +262,52 @@ class Events extends \base_core\models\Base {
 		fwrite($stream, $calendar->render());
 		rewind($stream);
 		return $stream;
+	}
+
+	public static function hasExternalSources() {
+		return (boolean) Settings::read('service.bandsintown');
+	}
+
+	public static function poll() {
+		foreach (Settings::read('service.bandsintown') as $s) {
+			if ($s['stream']) {
+				static::_pollBandsintown($s);
+			}
+		}
+	}
+
+	protected static function _pollBandsintown($config) {
+		$results = BandsintownEvents::all($config);
+
+		if (!$results) {
+			return $results;
+		}
+		foreach ($results as $result) {
+			$conditions = [
+				'title' => $result->title,
+				'location' => $result->location,
+				'start_date' => $result->start_date,
+				'start_time' => $result->start_time,
+				'end_date' => $result->end_date,
+				'end_time' => $result->end_time
+			];
+			if (Settings::read('useSites')) {
+				$conditions['site'] = $config['site'];
+			}
+			$item = Events::find('first', [
+				'conditions' => $conditions
+			]);
+			if (!$item) {
+				$item = Events::create([
+					// Moved here as when autopublish is enabled it would otherwise
+					// force manually unpublised items to become published again.
+					'is_published' => $config['autopublish']
+				]);
+			}
+			if (!$item->save($result->data())) {
+				Logger::notice('Failed to save event from bandsintown data: '. var_export($item->data(), true));
+			}
+		}
 	}
 
 	/* Deprecated / BC */

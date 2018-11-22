@@ -13,6 +13,7 @@
         "composer/installers": "^1",
         "davidpersson/li3_translate": "^2.1",
         "eluceo/ical": "^0.11 || ^0.12",
+        "guzzlehttp/guzzle": "^6",
         "php": "^7",
         "unionofrad/lithium": "^1.2"
     }

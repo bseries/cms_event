@@ -24,8 +24,11 @@
 
 namespace cms_event\controllers;
 
+use base_core\extensions\cms\Settings;
 use base_core\models\Timezones;
 use cms_event\models\Events;
+use li3_flash_message\extensions\storage\FlashMessage;
+use lithium\g11n\Message;
 
 class EventsController extends \base_core\controllers\BaseController {
 
@@ -51,11 +54,32 @@ class EventsController extends \base_core\controllers\BaseController {
 		fclose($stream);
 	}
 
+	public function admin_poll() {
+		set_time_limit(60 * 5);
+
+		extract(Message::aliases());
+
+		if (Events::poll()) {
+			FlashMessage::write($t('Successfully polled.', ['scope' => 'cms_event']), [
+				'level' => 'success'
+			]);
+		} else {
+			FlashMessage::write($t('Failed polling.', ['scope' => 'cms_event']), [
+				'level' => 'error'
+			]);
+		}
+		return $this->redirect(['action' => 'index', 'library' => 'cms_event']);
+	}
+
 	protected function _selects($item = null) {
 		if ($item) {
 			$timezones = Timezones::find('list');
+		} else {
+			$usePolling = Events::hasExternalSources();
 		}
-		return compact('timezones');
+		$useTicketing = Settings::read('event.useTicketing');
+
+		return compact('timezones', 'usePolling', 'useTicketing');
 	}
 }
 

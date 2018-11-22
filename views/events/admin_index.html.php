@@ -1,6 +1,5 @@
 <?php
 
-use base_core\extensions\cms\Settings;
 use lithium\g11n\Message;
 
 $t = function($message, array $options = []) {
@@ -27,6 +26,9 @@ $this->set([
 >
 
 	<div class="top-actions">
+		<?php if ($usePolling): ?>
+			<?= $this->html->link($t('refresh'), ['action' => 'poll'], ['class' => 'button refresh']) ?>
+		<?php endif ?>
 		<?= $this->html->link($t('event'), ['action' => 'add'], ['class' => 'button add']) ?>
 		<?= $this->_render('element', 'backlink', ['type' => 'multiple'], [
 			'library' => 'base_core'
@@ -39,7 +41,7 @@ $this->set([
 				<tr>
 					<td data-sort="is-published" class="flag is-published table-sort"><?= $t('publ.?') ?>
 					<td data-sort="is-promoted" class="flag is-promoted table-sort"><?= $t('prom.?') ?>
-					<?php if (Settings::read('event.useTicketing')): ?>
+					<?php if ($useTicketing): ?>
 						<td data-sort="is-sold-out" class="flag is-sold-out table-sort"><?= $t('sold?') ?>
 					<?php endif ?>
 					<td class="media">
@@ -67,7 +69,7 @@ $this->set([
 				<tr>
 					<td class="flag"><i class="material-icons"><?= ($item->is_published ? 'done' : '') ?></i>
 					<td class="flag"><i class="material-icons"><?= ($item->is_promoted ? 'done' : '') ?></i>
-					<?php if (Settings::read('event.useTicketing')): ?>
+					<?php if ($useTicketing): ?>
 						<td class="flag is-sold-out"><?= ($item->is_sold_out ? '✓' : '×') ?>
 					<?php endif ?>
 
