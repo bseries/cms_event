@@ -284,7 +284,8 @@ class Events extends \base_core\models\Base {
 		}
 		foreach ($results as $result) {
 			$conditions = [
-				'title' => $result->title,
+				// Search for existing only by the following data,
+				// the title can be edited by the user manually.
 				'location' => $result->location,
 				'start_date' => $result->start_date,
 				'start_time' => $result->start_time,
