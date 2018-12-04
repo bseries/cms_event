@@ -271,9 +271,12 @@ class Events extends \base_core\models\Base {
 	public static function poll() {
 		foreach (Settings::read('service.bandsintown') as $s) {
 			if ($s['stream']) {
-				static::_pollBandsintown($s);
+				if (!static::_pollBandsintown($s)) {
+					return false;
+				}
 			}
 		}
+		return true;
 	}
 
 	protected static function _pollBandsintown($config) {
@@ -304,11 +307,22 @@ class Events extends \base_core\models\Base {
 					// force manually unpublised items to become published again.
 					'is_published' => $config['autopublish']
 				]);
+				$data = $result->data();
+
+				$message = 'Creating new event from Bandsintown data:' . var_export($item->data(), true);
+				Logger::debug($message);
+			} else {
+				$data = $result->data();
+				unset($data['title']); // Can be edited manually.
+
+				$message = 'Updating event from Bandsintown data:' . var_export($item->data(), true);
+				Logger::debug($message);
 			}
-			if (!$item->save($result->data())) {
-				Logger::notice('Failed to save event from bandsintown data: '. var_export($item->data(), true));
+			if (!$item->save($data)) {
+				return false;
 			}
 		}
+		return true;
 	}
 
 	/* Deprecated / BC */
