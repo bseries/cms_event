@@ -67,6 +67,16 @@ class BandsintownEvents extends \base_core\models\Base {
 		$results = [];
 
 		$searchSimilar = function($results, $item) {
+			$a = DateTime::createFromFormat('Y-m-d', $item->start_date);
+
+			if (!$a) {
+				$message  = "Cannot check for a-similarity, as the start date didn't parse: ";
+				$message .= "tried `{$item->start}` of: " . var_export($item->data(), true);
+				Logger::write('debug', $message);
+
+				return false;
+			}
+
 			// Find similar from existing and return the key of the similar result.
 			foreach ($results as $k => $result) {
 				if (soundex($item->title) != soundex($result->title)) {
@@ -75,8 +85,15 @@ class BandsintownEvents extends \base_core\models\Base {
 				if (soundex($item->location) != soundex($result->location)) {
 					continue;
 				}
-				$a = DateTime::createFromFormat('Y-m-d', $item->start);
-				$b = DateTime::createFromFormat('Y-m-d', $result->start);
+				$b = DateTime::createFromFormat('Y-m-d', $result->start_date);
+
+				if (!$b) {
+					$message  = "Cannot continue check for b-similarity, as the start date didn't parse: ";
+					$message .= "tried `{$result->start_date}` of: " . var_export($result->data(), true);
+					Logger::write('debug', $message);
+
+					continue;
+				}
 
 				if ($a->diff($b)->format('%d') > 10) {
 					continue;
